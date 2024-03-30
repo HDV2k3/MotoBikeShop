@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using MotoBikeShop.Data;
 using MotoBikeShop.Models;
 using MotoBikeShop.Repository;
+using MotoBikeShop.ViewComponents;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,12 +17,13 @@ options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectio
 
 builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 
-
+builder.Services.AddSingleton<IHostedService, BackgroundService>();
+builder.Services.AddHttpClient<ReviewViewComponent>();
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
  .AddDefaultTokenProviders()
  .AddDefaultUI()
  .AddEntityFrameworkStores<motoBikeVHDbContext>();
-
+builder.Services.AddHttpClient();
 builder.Services.AddScoped<IProductRepository, EFProductRepository>();
 builder.Services.AddScoped<ICategoryRepository, EFCategoryRepository>();
 builder.Services.AddScoped<IFactoryRepository, EFFactoryRepository>();

@@ -66,6 +66,7 @@
                             <li class="nav-item">
                                 <a class="nav-link text-dark" id="cart-link" href="/Cart/Index">Cart</a>
                             </li>
+                            
                             <a id="contact-link" asp-controller="Contact" asp-action="Index" class="nav-item nav-link ">Contact</a>
                             <partial name="_LoginPartial">
 
@@ -99,7 +100,7 @@
             </div>
         </div>
         <!-- Modal Search End -->
-        <div style="min-height:500px;">
+        <div style="min-height:400px;">
             @RenderBody()
         </div>
         @await Html.PartialAsync("_LayoutFooter")

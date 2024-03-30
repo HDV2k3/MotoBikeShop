@@ -2,28 +2,28 @@
 {
 	public class MomoVM
 	{
-		public string partnerCode { get; set; }
-		public string accessKey { get; set; }
-		public string requestId { get; set; }
-		public string amount { get; set; }
-		public string orderId { get; set; }
-		public string orderInfo { get; set; }
-		public string orderType { get; set; }
-		public string transId { get; set; }
-		public string message { get; set; }
-		public string localMessage { get; set; }
-		public string responseTime { get; set; }
-		public string errorCode { get; set; }
-		public string payType { get; set; }
-		public string extraData { get; set; }
-		public string signature { get; set; }
+		public required string partnerCode { get; set; }
+		public required string accessKey { get; set; }
+		public required string requestId { get; set; }
+		public required string amount { get; set; }
+		public required string orderId { get; set; }
+		public required string orderInfo { get; set; }
+		public required string orderType { get; set; }
+		public required string transId { get; set; }
+		public required string message { get; set; }
+		public required string localMessage { get; set; }
+		public required string responseTime { get; set; }
+		public required	string errorCode { get; set; }
+		public required string payType { get; set; }
+		public required string extraData { get; set; }
+		public required string signature { get; set; }
 	}
 
 	public class MomoRequsetVM
 	{
-		public string message { get; set; }
-		public string orderId { get; set; }
-		public string errorCode { get; set; }
+		public required string message { get; set; }
+		public required string orderId { get; set; }
+		public required	string errorCode { get; set; }
 
 	}
 }

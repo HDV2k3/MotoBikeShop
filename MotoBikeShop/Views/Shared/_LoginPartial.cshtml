@@ -3,6 +3,7 @@
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
 
+
 <ul class="navbar-nav">
 
     @if (SignInManager.IsSignedIn(User))
@@ -11,8 +12,9 @@
 
         if (user != null)
         {
+            var fullName = user.FullName;
             <li class="nav-item">
-                <a id="manage" class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @UserManager.GetUserName(User)!</a>
+                <a id="manage" class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @fullName!</a>
             </li>
 
             if (User.IsInRole("Admin"))

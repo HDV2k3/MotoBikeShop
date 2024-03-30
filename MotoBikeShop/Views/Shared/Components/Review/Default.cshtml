@@ -1,0 +1,14 @@
+﻿@model List<MotoBikeShop.Service.Models.Item>
+
+@foreach (var item in Model)
+{
+    <div class="">
+        <p class="mb-2" style="font-size: 14px;">@item.Created_at</p>
+        <div class="d-flex justify-content-between">
+            <h5>@item.Title <span style="color: #ccc;">|</span></h5>
+        </div>
+        <p>
+            @item.Description
+        </p>
+    </div>
+}

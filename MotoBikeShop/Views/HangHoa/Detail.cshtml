@@ -1,4 +1,5 @@
 ﻿@model MotoBikeShop.ViewModels.CTHangHoaVM
+
 @{
 	ViewData["Title"] = "Detail";
 }
@@ -75,40 +76,29 @@
 								@Model.ChiTiet
 							</div>
 							<div class="tab-pane" id="nav-mission" role="tabpanel" aria-labelledby="nav-mission-tab">
-							@* 	<div class="d-flex">
-									<div class="">
-										<p class="mb-2" style="font-size: 14px;">@Model.CreatedAt</p>
-										<div class="d-flex justify-content-between">
-											<h5>@Model.Title</h5>
-											
-										</div>
-										<p>
-											@Model.Description
-										</p>
-									</div>
-								</div> *@
+								<div class="d-flex">
+									@await Component.InvokeAsync("Review")
+								</div>
 							</div>
 					
 						</div>
 					</div>
-					<form action="#">
+					<form action="/Review/SubmitReview" method="post">
 						<h4 class="mb-5 fw-bold">Nhận Xét</h4>
 						<div class="row g-4">
 							<div class="col-lg-6">
 								<div class="border-bottom rounded">
-									<input type="text" class="form-control border-0 me-4" placeholder="Họ Và Tên *">
+									<input type="text" class="form-control border-0 me-4" placeholder="Họ Và Tên *" name="fullName">
 								</div>
 							</div>
-						
 							<div class="col-lg-12">
 								<div class="border-bottom rounded my-4">
-									<textarea name="" id="" class="form-control border-0" cols="30" rows="8" placeholder="Đánh Giá Của Bạn *" spellcheck="false"></textarea>
+									<textarea class="form-control border-0" cols="30" rows="8" placeholder="Đánh Giá Của Bạn *" spellcheck="false" name="review"></textarea>
 								</div>
 							</div>
 							<div class="col-lg-12">
 								<div class="d-flex justify-content-between py-3 mb-5">
-									
-									<a href="#" class="btn border border-secondary text-danger rounded-pill px-4 py-3">Nhận Xét</a>
+									<button  type="submit" class="btn border border-secondary text-danger rounded-pill px-4 py-3">Nhận Xét</button>
 								</div>
 							</div>
 						</div>

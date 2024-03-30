@@ -112,7 +112,7 @@ namespace MotoBikeShop.Controllers
 
 						var hoadon = new HoaDon
 						{
-							UserId = customerId,
+							UserId = customerId?? khachHang.Id,
 							HoTen = model.HoTen ?? khachHang.FullName,
 							DiaChi = model.DiaChi ?? khachHang.Address,
 							PhoneNumber = model.DienThoai ?? khachHang.PhoneNumber,
@@ -234,7 +234,7 @@ namespace MotoBikeShop.Controllers
 							CachVanChuyen = "J&T",
 							MaTrangThai = 1,
 							GhiChu = model.GhiChu,
-							PhiVanChuyen = 30.0000,
+							PhiVanChuyen = 0,
 						};
 
 						db.Database.BeginTransaction();
