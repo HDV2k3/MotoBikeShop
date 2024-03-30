@@ -8,34 +8,39 @@ using System.Threading.Tasks;
 
 public class BackgroundService : IHostedService, IDisposable
 {
-	private Timer _timer;
-	private readonly IViewComponentHelper _viewComponentHelper;
+    private Timer _timer;
+    private readonly IServiceProvider _serviceProvider;
 
-	public BackgroundService(IViewComponentHelper viewComponentHelper)
-	{
-		_viewComponentHelper = viewComponentHelper;
-	}
+    public BackgroundService(IServiceProvider serviceProvider)
+    {
+        _serviceProvider = serviceProvider;
+    }
 
-	public Task StartAsync(CancellationToken cancellationToken)
-	{
-		_timer = new Timer(DoWork, null, TimeSpan.Zero, TimeSpan.FromSeconds(10));
-		return Task.CompletedTask;
-	}
+    public Task StartAsync(CancellationToken cancellationToken)
+    {
+        _timer = new Timer(DoWork, null, TimeSpan.Zero, TimeSpan.FromMinutes(1));
 
-	private void DoWork(object state)
-	{
-		_viewComponentHelper.InvokeAsync(typeof(ReviewViewComponent));
-	}
+        return Task.CompletedTask;
+    }
 
-	public Task StopAsync(CancellationToken cancellationToken)
-	{
-		_timer?.Change(Timeout.Infinite, 0);
+    private void DoWork(object state)
+    {
+        using (var scope = _serviceProvider.CreateScope())
+        {
+            var viewComponentHelper = scope.ServiceProvider.GetRequiredService<IViewComponentHelper>();
+            viewComponentHelper.InvokeAsync(typeof(ReviewViewComponent));
+        }
+    }
 
-		return Task.CompletedTask;
-	}
+    public Task StopAsync(CancellationToken cancellationToken)
+    {
+        _timer?.Change(Timeout.Infinite, 0);
 
-	public void Dispose()
-	{
-		_timer?.Dispose();
-	}
+        return Task.CompletedTask;
+    }
+
+    public void Dispose()
+    {
+        _timer?.Dispose();
+    }
 }

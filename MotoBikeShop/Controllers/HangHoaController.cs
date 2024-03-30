@@ -35,7 +35,7 @@ namespace MotoBikeShop.Controllers
                 hanghoas = hanghoas.Where(p => p.MaLoai == loai.Value);
             }
 
-            int pageSize = 1; // Số lượng sản phẩm trên mỗi trang
+            int pageSize = 6; // Số lượng sản phẩm trên mỗi trang
             int pageNumber = page ?? 1; // Trang hiện tại
 
             var pagedHanghoas = hanghoas.Select(p => new HangHoaVM
