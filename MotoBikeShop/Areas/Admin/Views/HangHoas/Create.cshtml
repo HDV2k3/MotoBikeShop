@@ -24,8 +24,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="MaLoai" class="control-label"></label>
-                <select asp-for="MaLoai" class="form-control" asp-items="ViewBag.Loais"></select>
-                <span asp-validation-for="MaLoai" class="text-danger"></span>
+                <select asp-for="MaLoai" class ="form-control" asp-items="ViewBag.MaLoai"></select>
             </div>
             <div class="form-group">
                 <label asp-for="MoTaDonVi" class="control-label"></label>
@@ -39,7 +38,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="Hinh" class="control-label"></label>
-                <input type="file" asp-for="Hinh" class="form-control" />
+                <input asp-for="Hinh" class="form-control" />
                 <span asp-validation-for="Hinh" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -64,11 +63,10 @@
             </div>
             <div class="form-group">
                 <label asp-for="MaNCC" class="control-label"></label>
-                <select asp-for="MaNCC" class="form-control" asp-items="ViewBag.NhaCungCaps"></select>
-                <span asp-validation-for="MaNCC" class="text-danger"></span>
+                <select asp-for="MaNCC" class ="form-control" asp-items="ViewBag.MaNCC"></select>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary my-3" />
+                <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
     </div>

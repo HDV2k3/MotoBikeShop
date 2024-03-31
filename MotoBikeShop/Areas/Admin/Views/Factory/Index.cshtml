@@ -4,68 +4,73 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.TenCongTy)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Logo)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.NguoiLienLac)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Email)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DienThoai)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DiaChi)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.MoTa)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.TenCongTy)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Logo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NguoiLienLac)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DienThoai)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DiaChi)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MoTa)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.MaNCC">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.MaNCC">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.MaNCC">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<style>
+    .product-card {
+        margin-bottom: 20px;
+        background-color: #fff;
+        border-radius: 5px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        transition: box-shadow 0.3s;
+        display: flex;
+        flex-direction: column;
+        height: 100%; /* Đảm bảo rằng các card có cùng chiều cao */
+    }
+
+        .product-card:hover {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+    
+
+    .product-title {
+        margin-bottom: 10px;
+        font-weight: bold;
+    }
+
+    .product-price {
+        margin-bottom: 10px;
+    }
+
+    .product-description {
+        margin-bottom: 10px;
+    }
+</style>
+
+<body>
+
+    <!-- Phần header -->
+    <header class="header">
+        <a asp-action="Create" class="btn btn-danger" style=" color: white"> + Create New</a>
+    </header>
+
+    <!-- Phần body -->
+    <div class="container">
+        <h2>Factories</h2>
+        <div class="row">
+            @foreach (var factory in Model)
+            {
+                <div class="col-lg-4 col-md-6">
+                    <div class="card product-card">  
+                        <div class="card-body product-details">
+                            <p class="card-text product-price">@factory.MaNCC</p>
+                            <h5 class="card-title product-title">@factory.TenCongTy</h5>       
+                            <p class="card-text product-price">@factory.Logo</p>
+                            <p class="card-text product-price"> @factory.NguoiLienLac</p>
+                            <p class="card-text product-price">@factory.Email</p>
+                            <p class="card-text product-price">@factory.DienThoai</p>
+                            <p class="card-text product-price">@factory.DiaChi</p>
+                            <p class="card-text product-description">@factory.MoTa</p>
+                        </div>
+                        <div class="card-footer product-actions">
+                            <a asp-action="Details" asp-route-id="@factory.MaNCC" class="btn btn-info">View</a>
+                            <a asp-action="Edit" asp-route-id="@factory.MaNCC" class="btn btn-warning">Edit</a>
+                            <a asp-action="Delete" asp-route-id="@factory.MaNCC" class="btn btn-danger">Delete</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+</body>

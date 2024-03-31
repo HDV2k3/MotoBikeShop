@@ -44,7 +44,7 @@
 
     <!-- Phần header -->
     <header class="header">
-        <a asp-action="Create" class="btn" style="background-color:palegreen; color: white"> + Create New</a>
+        <a asp-action="Create" class="btn btn-danger" style=" color: white"> + Create New</a>
     </header>
 
     <!-- Phần body -->
@@ -57,6 +57,7 @@
                     <div class="card product-card">
                         <img class="card-img-top product-image" src="~/images/@product.Hinh" alt="Product Image">
                         <div class="card-body product-details">
+                            <p class="card-text product-price">@product.MaHH</p>
                             <h5 class="card-title product-title">@product.TenHH</h5>
                             <p class="card-text product-price">@product.TenAlias</p>
                             <p class="card-text product-price">@product.MoTaDonVi</p>
@@ -65,15 +66,15 @@
                             <p class="card-text product-price">@product.GiamGia</p>
                             <p class="card-text product-price">@product.SoLanXem</p>
                             <p class="card-text product-description">@product.MoTa</p>
-                            <p class="card-text product-price">@product.MaLoaiNavigation.TenLoai</p>
+                            <p class="card-text product-price">@product.MaLoaiNavigation?.TenLoai</p>
                             <p class="card-text product-price">@product.MaNCC</p>
 
 
                         </div>
                         <div class="card-footer product-actions">
-                            <a asp-action="Detail" class="btn btn-info">View</a>
-                            <a asp-action="Edit" class="btn btn-warning">Edit</a>
-                            <a asp-action="Delete" class="btn btn-danger">Delete</a>
+                            <a asp-action="Details"  asp-route-id="@product.MaHH" class="btn btn-info">View</a>
+                            <a asp-action="Edit"  asp-route-id="@product.MaHH" class="btn btn-warning">Edit</a>
+                            <a asp-action="Delete"  asp-route-id="@product.MaHH" class="btn btn-danger">Delete</a>
                         </div>
                     </div>
                 </div>

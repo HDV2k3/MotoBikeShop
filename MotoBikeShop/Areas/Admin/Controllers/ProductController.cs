@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using MotoBikeShop.Data;
 using MotoBikeShop.Helpers;
 using MotoBikeShop.Models;
@@ -14,16 +15,18 @@ namespace MotoBikeShop.Areas.Admin
     [Route("Product")]
     public class ProductController : Controller
     {
-       
+        private readonly motoBikeVHDbContext _context;
         private readonly IProductRepository _productRepository;
         private readonly ICategoryRepository _categoryRepository;
         private readonly IFactoryRepository _factoryRepository;
 
-        public ProductController(IProductRepository productRepository, ICategoryRepository categoryRepository, IFactoryRepository factoryRepository)
+        public ProductController(motoBikeVHDbContext context, IProductRepository productRepository, ICategoryRepository categoryRepository, IFactoryRepository factoryRepository)
         {
             _productRepository = productRepository;
             _categoryRepository = categoryRepository;
             _factoryRepository = factoryRepository;
+            _context = context;
+
         }
         [Route("")]
         [Route("index")]
@@ -82,5 +85,104 @@ namespace MotoBikeShop.Areas.Admin
             }
             return image.FileName; // Trả về đường dẫn tương đối
         }
+
+        [HttpGet]
+        [Route("Details/{id}")]
+        public async Task<IActionResult> Details(int id)
+        {
+            var product = await _productRepository.GetByIdAsync(id);
+            if (product == null)
+            {
+                return NotFound();
+            }
+            return View(product);
+        }
+
+        [HttpGet]
+        [Route("Edit/{id}")]
+        public async Task<IActionResult> Edit(int id)
+        {
+            var product = await _productRepository.GetByIdAsync(id);
+            if (product == null)
+            {
+                return NotFound();
+            }
+            var loais = await _categoryRepository.GetAllAsync();
+            ViewBag.Loais = new SelectList(loais, "MaLoai", "TenLoai", product.MaLoai);
+            var nhacungcaps = await _factoryRepository.GetAllAsync();
+            ViewBag.NhaCungCaps = new SelectList(nhacungcaps, "MaNCC", "MaNCC", product.MaNCC);
+
+            return View(product);
+        }
+
+        // Xử lý cập nhật sản phẩm
+        [HttpPost]
+        [Route("Edit/{id}")]
+        public async Task<IActionResult> Edit(int id, HangHoa product, IFormFile imageUrl)
+        {
+            ModelState.Remove("Hinh"); // Loại bỏ xác thực ModelState cho ImageUrl
+            if (id != product.MaHH)
+            {
+                return NotFound();
+            }
+            if (!ModelState.IsValid)
+            {
+                var existingProduct = await _productRepository.GetByIdAsync(id); // Giả định có phương thức GetByIdAsync
+                                                                                 // Giữ nguyên thông tin hình ảnh nếu không có hình mới được tải lên
+                if (imageUrl == null)
+                {
+                    product.Hinh = existingProduct.Hinh;
+                }
+                else
+                {
+                    // Lưu hình ảnh mới
+                    product.Hinh = await SaveImage(imageUrl);
+                }
+                // Cập nhật các thông tin khác của sản phẩm
+                existingProduct.TenHH = product.TenHH;
+                existingProduct.TenAlias = product.TenAlias;
+                existingProduct.MoTaDonVi = product.MoTaDonVi;
+                existingProduct.DonGia = product.DonGia;
+                existingProduct.NgaySX = product.NgaySX;
+                existingProduct.GiamGia = product.GiamGia;
+                existingProduct.MoTa = product.MoTa;
+                existingProduct.SoLanXem = product.SoLanXem;
+                existingProduct.Hinh = product.Hinh;
+
+                await _productRepository.UpdateAsync(existingProduct);
+
+                return RedirectToAction(nameof(Index));
+            }
+            var loais = await _categoryRepository.GetAllAsync();
+            ViewBag.Loais = new SelectList(loais, "MaLoai", "TenLoai");
+            var nhacungcaps = await _factoryRepository.GetAllAsync();
+            ViewBag.NhaCungCaps = new SelectList(nhacungcaps, "MaNCC", "MaNCC");
+            return View(product);
+        }
+        [HttpGet]
+        [Route("Delete/{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var product = await _productRepository.GetByIdAsync(id);
+            if (product == null)
+            {
+                return NotFound();
+            }
+            return View(product);
+        }
+        // Xử lý xóa sản phẩm
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        [Route("Delete/{id}")]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var product = await _productRepository.GetByIdAsync(id);
+            if (product != null)
+            {
+                await _productRepository.DeleteAsync(id);
+            }
+            return RedirectToAction(nameof(Index));
+        }
+
     }
 }

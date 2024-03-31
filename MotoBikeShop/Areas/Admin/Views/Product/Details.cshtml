@@ -1,0 +1,58 @@
+﻿@model MotoBikeShop.Data.HangHoa
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<style>
+    .product-details {
+        margin-top: 40px;
+    }
+
+    .product-image {
+        width: 100%;
+        height: auto;
+        max-width: 300px;
+        margin-bottom: 20px;
+    }
+
+    .additional-images {
+        margin-top: 20px;
+    }
+
+    .additional-image {
+        width: 100%;
+        height: auto;
+        max-width: 300px;
+        margin-bottom: 10px;
+    }
+</style>
+
+
+
+<body>
+    <div class="container">
+        <h2>Product Details</h2>
+        <div class="product-details">
+            <h4>Mã hàng hóa: @Model.MaHH</h4>
+            <h4>Tên hàng hóa: @Model.TenHH</h4>
+            <h4>Tên Alias: @Model.TenAlias</h4>
+            <h4>Mô tả đơn vị: @Model.MoTaDonVi</h4>
+            <h4>Đơn giá: @Model.DonGia</h4>
+            <h4>Ngày sản xuất: @Model.NgaySX</h4>
+            <h4>Giảm giá: @Model.GiamGia %</h4>
+            <h4>Số lần xem: @Model.SoLanXem</h4>
+            <h4>Mô tả: @Model.TenHH</h4>
+            <h4>loại: @Model.MaLoai</h4>
+            <h4>Nhà cung cấp: @Model.MaNCC</h4>
+
+            <img src="~/images/@Model.Hinh" alt="Product Image" class="product-image" />
+            <div>
+                <a asp-action="Edit" asp-route-id="@Model.MaHH">Edit</a> 
+                <a asp-action="Index">Back to List</a>
+            </div>
+
+        </div>
+    </div>
+</body>
+
