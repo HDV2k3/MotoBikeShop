@@ -25,6 +25,7 @@ namespace MotoBikeShop.Controllers
 			{
 				title = fullName,
 				description = review
+
 			};
 
 			var httpClient = _httpClientFactory.CreateClient();

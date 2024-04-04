@@ -1,0 +1,29 @@
+﻿<div class="col-lg-12">
+    <div class="mb-3">
+        <h4>Hãng Xe</h4>
+
+        @foreach (var nhacc in Model)
+        {
+            <div class="hanghoa">
+                <div class="mb-2">
+                    <input type="radio" class="me-2 categories-radio" name="Categories" data-ncc="@nhacc.MaNCC">
+                    <a class="categories-link" asp-controller="HangHoa" asp-action="Index" asp-route-ncc="@nhacc.MaNCC">
+                        <label class="categories-label">@nhacc.TenCongTy</label>
+                    </a>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<script>
+    document.querySelectorAll('.categories-radio').forEach(radio => {
+        radio.addEventListener('click', function () {
+            const selectedNCC = this.dataset.ncc;
+            const link = this.parentElement.querySelector('.categories-link');
+            const href = link.getAttribute('href');
+            const newHref = href.split('?')[0] + `?ncc=${selectedNCC}`;
+            link.setAttribute('href', newHref);
+        });
+    });
+</script>

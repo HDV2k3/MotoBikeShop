@@ -58,7 +58,7 @@
                                         </div>
                                         <input type="number" class="form-control form-control-sm text-center border-0" value="@item.SoLuong" min="1" name="Quantity">
                                         <div class="input-group-btn">
-                                            <button class="btn btn-sm btn-plus rounded-circle bg-light border btn-plus" >
+                                            <button class="btn btn-sm btn-plus rounded-circle bg-light border btn-plus">
                                                 <i class="fa fa-plus"></i>
                                             </button>
                                         </div>
@@ -104,15 +104,16 @@
                             <h5 class="mb-0 ps-4 me-4">Total</h5>
                             <p class="mb-0 pe-4">@Model.Sum(p => p.ThanhTien).ToString("#,##0.00")VND</p>
                         </div>
-                        <button  asp-action="Checkout" asp-controller="Cart" class="btn border-secondary rounded-pill px-4 py-3 text-danger text-uppercase mb-4 ms-4" type="button">Thanh Toán</button>
-                        <a asp-action="Checkout" asp-controller="Cart">Thanh Toán</a>
+                        <form >
+                            <button asp-action="Checkout" asp-controller="Cart" class="btn border-secondary rounded-pill px-4 py-3 text-danger text-uppercase mb-4 ms-4" type="submit">Thanh Toán</button>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
     <!-- Cart Page End -->
-   
+
 </body>
 
 

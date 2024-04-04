@@ -1,4 +1,4 @@
-﻿@model IEnumerable<MotoBikeShop.ViewModels.CartItem> 
+﻿@model IEnumerable<MotoBikeShop.ViewModels.CartItem>
 @{
 	ViewData["Title"] = "Checkout";
 }
@@ -28,7 +28,7 @@
 						<div class="form-item delivery-info">
 							<label class="form-label my-3">Người nhận hàng<sup>*</sup></label>
 							<input type="text" name="HoTen" class="form-control">
-							
+
 						</div>
 						<div class="form-item delivery-info">
 							<label class="form-label my-3">Địa chỉ nhận hàng<sup>*</sup></label>
@@ -110,7 +110,7 @@
 									<td class="py-5"></td>
 									<td class="py-5">
 										<div class="py-3 border-bottom border-top">
-											<p  class="mb-0 text-dark">@Model.Sum(p => p.ThanhTien).ToString("#,##0.00")VND</p>
+											<p class="mb-0 text-dark">@Model.Sum(p => p.ThanhTien).ToString("#,##0.00")VND</p>
 										</div>
 									</td>
 								</tr>
@@ -127,18 +127,18 @@
 </div>
 <!-- Checkout Page End -->
 
-	<script>
-		$(document).ready(function () {
-			$("#GiongKhachHang").change(function () {
-				if ($(this).prop("checked")) {
-					$(this).val(true);
-					$(".delivery-info").addClass("d-none");
-				} else {
-					$(this).val(false);
-					$(".delivery-info").removeClass("d-none");
-				}
-			});
+<script>
+	$(document).ready(function () {
+		$("#GiongKhachHang").change(function () {
+			if ($(this).prop("checked")) {
+				$(this).val(true);
+				$(".delivery-info").addClass("d-none");
+			} else {
+				$(this).val(false);
+				$(".delivery-info").removeClass("d-none");
+			}
 		});
+	});
 
-		
-	</script>
+
+</script>

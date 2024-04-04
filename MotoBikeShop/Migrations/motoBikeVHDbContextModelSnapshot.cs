@@ -257,7 +257,7 @@ namespace MotoBikeShop.Migrations
                             MaNCC = "NCC002",
                             MoTa = "xe này cực đẹp",
                             MoTaDonVi = "VND",
-                            NgaySX = new DateTime(2024, 3, 30, 1, 22, 50, 112, DateTimeKind.Local).AddTicks(3620),
+                            NgaySX = new DateTime(2024, 4, 1, 20, 27, 45, 800, DateTimeKind.Local).AddTicks(9819),
                             SoLanXem = 99,
                             TenAlias = "exciter",
                             TenHH = "Exciter"
@@ -272,7 +272,7 @@ namespace MotoBikeShop.Migrations
                             MaNCC = "NCC001",
                             MoTa = "xe này cực đẹp",
                             MoTaDonVi = "VND",
-                            NgaySX = new DateTime(2024, 3, 30, 1, 22, 50, 112, DateTimeKind.Local).AddTicks(3639),
+                            NgaySX = new DateTime(2024, 4, 1, 20, 27, 45, 800, DateTimeKind.Local).AddTicks(9833),
                             SoLanXem = 99,
                             TenAlias = "vario",
                             TenHH = "Vario"
@@ -287,7 +287,7 @@ namespace MotoBikeShop.Migrations
                             MaNCC = "NCC003",
                             MoTa = "xe này cực đẹp",
                             MoTaDonVi = "VND",
-                            NgaySX = new DateTime(2024, 3, 30, 1, 22, 50, 112, DateTimeKind.Local).AddTicks(3640),
+                            NgaySX = new DateTime(2024, 4, 1, 20, 27, 45, 800, DateTimeKind.Local).AddTicks(9835),
                             SoLanXem = 99,
                             TenAlias = "wave-rsx",
                             TenHH = "Wave RSX"
@@ -597,37 +597,24 @@ namespace MotoBikeShop.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
-            modelBuilder.Entity("MotoBikeShop.Models.NhanXet", b =>
+            modelBuilder.Entity("MotoBikeShop.Models.EmailCustomer", b =>
                 {
-                    b.Property<string>("MaGy")
+                    b.Property<int>("IdEmail")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("int");
 
-                    b.Property<string>("DienThoai")
-                        .HasColumnType("nvarchar(max)");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdEmail"));
 
-                    b.Property<string>("HoTen")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateOnly>("NgayGy")
-                        .HasColumnType("date");
-
-                    b.Property<string>("NoiDung")
+                    b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                    b.HasKey("IdEmail");
 
-                    b.HasKey("MaGy");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("NhanXets");
+                    b.ToTable("EmailCustomers");
                 });
 
-            modelBuilder.Entity("MotoBikeShop.Models.Result", b =>
+            modelBuilder.Entity("MotoBikeShop.Models.MoMo", b =>
                 {
                     b.Property<string>("partnerCode")
                         .HasColumnType("nvarchar(450)");
@@ -691,6 +678,36 @@ namespace MotoBikeShop.Migrations
                     b.HasKey("partnerCode");
 
                     b.ToTable("results");
+                });
+
+            modelBuilder.Entity("MotoBikeShop.Models.NhanXet", b =>
+                {
+                    b.Property<string>("MaGy")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("DienThoai")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("HoTen")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateOnly>("NgayGy")
+                        .HasColumnType("date");
+
+                    b.Property<string>("NoiDung")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("MaGy");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("NhanXets");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

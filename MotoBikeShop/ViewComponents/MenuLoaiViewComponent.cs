@@ -21,7 +21,5 @@ namespace MotoBikeShop.ViewComponents
             return View(data); //Default.cshtml
         }
 
-
-
     }
 }

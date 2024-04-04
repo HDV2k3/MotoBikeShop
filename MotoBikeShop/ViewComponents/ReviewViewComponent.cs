@@ -16,7 +16,6 @@ namespace MotoBikeShop.ViewComponents
 
         public ReviewViewComponent(IHttpClientFactory httpClientFactory)
         {
-			//httpClient = new HttpClient();
 			httpClient = httpClientFactory.CreateClient();
 		}
 

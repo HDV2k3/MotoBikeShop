@@ -1,4 +1,6 @@
-﻿namespace MotoBikeShop.ViewModels
+﻿using MotoBikeShop.Models;
+
+namespace MotoBikeShop.ViewModels
 {
     public class HangHoaVM
     {
@@ -7,7 +9,7 @@
         public required String Hinh { get; set; }   
         public double DonGia { get; set; }   
         public required String MoTaNgan { get; set; }   
-        public required String TenLoai { get; set; }   
+        public required String TenLoai { get; set; }
     }
     public class CTHangHoaVM
     {
@@ -21,8 +23,6 @@
         public required int DiemDanhGia { get; set; }
         public required int SoLuongTon { get; set; }
 		public required int MaLoai { get; set; }
-     
-
 
     }
 

@@ -1,5 +1,5 @@
-﻿<section id="footer">
-
+﻿
+<section id="footer">
     <!-- Footer Start -->
     <div class="container-fluid bg-dark text-danger-50 footer pt-5 mt-5">
         <div class="container py-5">
@@ -13,8 +13,10 @@
                     </div>
                     <div class="col-lg-6">
                         <div class="position-relative mx-auto">
-                            <input class="form-control border-0 w-100 py-3 px-4 rounded-pill" type="number" placeholder="Your Email">
-                            <button type="submit" class="btn btn-danger border-0 border-secondary py-3 px-4 position-absolute rounded-pill text-white" style="top: 0; right: 0;">Subscribe Now</button>
+                            <form asp-action="SubmitEmail" asp-controller="EmailCustomers">
+                                <input class="form-control border-0 w-100 py-3 px-4 rounded-pill" type="email" placeholder="Your Email" name="Email" >
+                                <button type="submit" class="btn btn-danger border-0 border-secondary py-3 px-4 position-absolute rounded-pill text-white" style="top: 0; right: 0;">Subscribe Now</button>
+                            </form>
                         </div>
                     </div>
                     <div class="col-lg-3">

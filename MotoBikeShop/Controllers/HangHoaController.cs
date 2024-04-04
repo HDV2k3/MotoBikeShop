@@ -19,6 +19,7 @@ namespace MotoBikeShop.Controllers
             private readonly motoBikeVHDbContext db;
 
         private readonly HttpClient _httpClient;
+
       
            
         public HangHoaController(motoBikeVHDbContext context)
@@ -27,14 +28,17 @@ namespace MotoBikeShop.Controllers
                 _httpClient = new HttpClient();
             
         }
-        public IActionResult Index(int? loai, int? page)
+        public IActionResult Index(int? loai, int? page,string? ncc)
         {
             var hanghoas = db.HangHoas.AsQueryable();
-            if (loai.HasValue)
+            if (loai.HasValue )
             {
                 hanghoas = hanghoas.Where(p => p.MaLoai == loai.Value);
             }
-
+            if (!string.IsNullOrEmpty(ncc))
+            {
+                hanghoas = hanghoas.Where(p => p.MaNCC == ncc);
+            }             
             int pageSize = 6; // Số lượng sản phẩm trên mỗi trang
             int pageNumber = page ?? 1; // Trang hiện tại
 
@@ -106,13 +110,7 @@ namespace MotoBikeShop.Controllers
             };
             return View(result);
         }
-        [HttpGet]
-        public IActionResult GetMoreProducts(int skip, int take)
-        {
-            var products = db.HangHoas.Skip(skip).Take(take).ToList();
-            return Json(products);
-        }
-
+       
   
 	}
 

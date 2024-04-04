@@ -1,10 +1,13 @@
-﻿
+
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using MotoBikeShop.Data;
 using MotoBikeShop.Models;
 using MotoBikeShop.Repository;
 using MotoBikeShop.ViewComponents;
+using System.Text;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,6 +16,11 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<motoBikeVHDbContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+
+
+
+
 
 
 builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
@@ -31,14 +39,26 @@ builder.Services.AddScoped<UserManager<ApplicationUser>>();
 builder.Services.AddScoped<SignInManager<ApplicationUser>>();
 builder.Services.AddRazorPages();
 builder.Services.AddDistributedMemoryCache();
-// đăng ký PaypalClient dạng Singleton() - chỉ có 1 instance duy nhất trong toàn ứng dụng
-//builder.Services.AddSingleton(x => new PaypalClient(
-//		builder.Configuration["PaypalOptions:AppId"],
-//		builder.Configuration["PaypalOptions:AppSecret"],
-//		builder.Configuration["PaypalOptions:Mode"]
-//));
 
 
+//builder.Services.AddAuthentication(options =>
+//{
+//    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+//    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+//    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+//}).AddJwtBearer(options =>
+//{
+//    options.SaveToken = true;
+//    options.RequireHttpsMetadata = false;
+//    options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+//    {
+//        ValidateIssuer = true,
+//        ValidateAudience = true,
+//        ValidAudience = builder.Configuration["JWT:ValidAudience"],
+//        ValidIssuer = builder.Configuration["JWT:ValidIssuer"],
+//        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Secret"]))
+//    };
+//});
 builder.Services.AddSession(options =>
 {
     options.Cookie.Name = "YourSessionCookieName";

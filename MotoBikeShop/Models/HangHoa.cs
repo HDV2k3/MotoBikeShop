@@ -49,7 +49,6 @@ namespace MotoBikeShop.Data
         public virtual Loai MaLoaiNavigation { get; set; } = null!;
 
         [ForeignKey("MaNCC")]
-        public virtual NhaCungCap MaNccNavigation { get; set; } = null!;
-       
+        public virtual NhaCungCap MaNccNavigation { get; set; } = null!;       
     }
 }
