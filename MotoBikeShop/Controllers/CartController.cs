@@ -171,12 +171,11 @@ namespace MotoBikeShop.Controllers
                     string orderInfo = "MotoBike Shop";
                     string returnUrl = "https://localhost:44375/Cart/Success";
                     string notifyurl = "https://localhost:44375/Cart/SavePayment"; //lưu ý: notifyurl không được sử dụng localhost, có thể sử dụng ngrok để public localhost trong quá trình test
-
-                    string amount = "10000";
-                    string orderid = DateTime.Now.Ticks.ToString(); //mã đơn hàng
+					string amount = model.TongTien.Replace(".", "").Replace(",","").Replace("VND","");
+					string orderid = DateTime.Now.Ticks.ToString(); //mã đơn hàng
                     string requestId = DateTime.Now.Ticks.ToString();
                     string extraData = "";
-
+                   
                     //Before sign HMAC SHA256 signature
                     string rawHash = "partnerCode=" +
                         partnerCode + "&accessKey=" +
@@ -221,7 +220,6 @@ namespace MotoBikeShop.Controllers
                         {
                             khachHang = db.Users.SingleOrDefault(kh => kh.Id == customerId);
                         }
-
                         var hoadon = new HoaDon
                         {
                             UserId = customerId,

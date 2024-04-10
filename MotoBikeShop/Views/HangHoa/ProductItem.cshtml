@@ -1,5 +1,5 @@
 ﻿@model IEnumerable<MotoBikeShop.ViewModels.HangHoaVM>
-<h3> Có <b>@Model.Count()</b> sản phẩm.</h3>
+@* <h3> Có <b>@Model.Count()</b> sản phẩm.</h3>
 @foreach (var item in Model)
 {
 	<div class="col-md-6 col-lg-6 col-xl-4">
@@ -8,6 +8,7 @@
 				<a asp-action="Detail" asp-controller="HangHoa" asp-route-id="@item.MaHh">
 					<img src="~/images/@item.Hinh" class="img-fluid w-100 rounded-top" alt="@item.TenHh">
 				</a>
+				
 			</div>
 			<div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">@item.TenLoai</div>
 			<div class="p-4 border border-secondary border-top-0 rounded-bottom">
@@ -20,4 +21,43 @@
 			</div>
 		</div>
 	</div>
-}
+} *@
+<style>
+    .homepage-product-slide-tab .homepage-product-slide-tab-detail {
+        opacity: 0;
+        transition: opacity 0.3s ease-in-out;
+    }
+
+    .homepage-product-slide-tab:hover .homepage-product-slide-tab-detail {
+        opacity: 1;
+    }
+</style>
+
+<div class="container">
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="col-6 col-md-3">
+                <div class="homepage-product-slide-tab" data-sid="449" data-category="2">
+                    <div class="homepage-product-slide-tab-top">
+                        <div class="img-product">
+                            <div class="image-motor-product">
+                                <img src="~/images/@item.Hinh" alt="@item.TenHh" style="max-width: 100%; max-height: 100%;">
+                            </div>
+                            <a asp-action="Detail" asp-controller="HangHoa" asp-route-id="@item.MaHh">
+                                <div class="homepage-product-slide-tab-detail d-flex align-items-center justify-content-center">Xem chi tiết</div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="name-price-motor w-100">
+                        <p class="homepage-product-tab-name homepage-txt-name text-danger font-weight-bold " style="font-weight:bolder">@item.TenHh</p>
+                        <div class="d-flex justify-content-between flex-lg-wrap">
+                            <p class="homepage-product-slide-tab-price homepage-txt-price " style="font-weight:bold">Từ @item.DonGia.ToString("#,##0.00")<sup class="supper">VNĐ</sup></p>
+                            <a asp-action="AddToCart" asp-controller="Cart" asp-route-id="@item.MaHh" class="btn border border-secondary rounded-pill px-3 text-danger"><i class="fa fa-shopping-bag me-2 text-danger"></i> Đưa vào giỏ</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

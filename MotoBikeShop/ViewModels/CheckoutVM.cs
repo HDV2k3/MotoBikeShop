@@ -16,5 +16,6 @@ namespace MotoBikeShop.ViewModels
         public double? PhiVanChuyen { get; set; } 
         public string? CachThanhToan { get; set; }
 
+        public string? TongTien { get; set; }
     }
 }

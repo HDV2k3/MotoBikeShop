@@ -20,7 +20,7 @@ namespace MotoBikeShop.ViewComponents
 
 		public List<HangHoa> GetProducts()
 		{
-			return db.HangHoas.ToList();
+			return db.HangHoas.OrderBy(p=>p.TenHH).ToList();
 		}
 	}
 }

@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
     <PackageReference Include="log4net" Version="2.0.17" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.3" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Negotiate" Version="8.0.3" />
@@ -40,7 +39,17 @@
   <ItemGroup>
     <Folder Include="Areas\Admin\Models\" />
     <Folder Include="Areas\Admin\Views\Product\" />
-    <Folder Include="wwwroot\images\" />
+    <Folder Include="wwwroot\images\Exciter\" />
+    <Folder Include="wwwroot\images\Future\" />
+    <Folder Include="wwwroot\images\siriusFi\" />
+    <Folder Include="wwwroot\images\sirius\" />
+    <Folder Include="wwwroot\images\NewFolder\" />
+    <Folder Include="wwwroot\images\vario\" />
+    <Folder Include="wwwroot\images\Vespa\" />
+    <Folder Include="wwwroot\images\SH\" />
+    <Folder Include="wwwroot\images\Wave\alpha\" />
+    <Folder Include="wwwroot\images\Wave\rsx\" />
+    <Folder Include="wwwroot\images\Winner\" />
   </ItemGroup>
 
   <ItemGroup>

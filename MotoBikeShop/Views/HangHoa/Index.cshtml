@@ -37,7 +37,6 @@
                     </a>
                 </span>
             </div>
-
             @for (int i = 1; i <= ViewBag.TotalPages; i++)
             {
                 <div class="col-auto">
@@ -46,7 +45,6 @@
                     </span>
                 </div>
             }
-
             <div class="col-auto">
                 <span class="page-item @(ViewBag.CurrentPage == ViewBag.TotalPages ? "disabled" : "")">
                     <a class="page-link" href="@Url.Action("Index", new { page = ViewBag.CurrentPage + 1 })" aria-label="Next">

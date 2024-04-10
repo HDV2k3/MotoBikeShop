@@ -36,6 +36,9 @@ namespace MotoBikeShop.Data
         public int SoLanXem { get; set; }
 
         public string MoTa { get; set; }
+        public string? ThietKe { get; set; }
+        public string? DongCoCongNghe { get; set; }
+        public string? TienIchAnToan { get; set; }
 
         [Required]
  
