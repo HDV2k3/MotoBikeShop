@@ -27,15 +27,15 @@ namespace MotoBikeShop.Controllers
 			db = context;
 			_userManager = userManager;
 		}
-
+        // dssp trong giỏ hàng
 		public List<CartItem> Cart => HttpContext.Session.Get<List<CartItem>>(MySetting.CART_KEY) ?? new List<CartItem>();
-
+        // giao diện
 		public IActionResult Index()
 		{
 			return View(Cart);
 		}
-
-		public IActionResult AddToCart(int id, int quantity = 1)
+        // thêm vào giỏ hàng
+		public IActionResult AddToCart(int id, int quantity = 3)
 		{
 			var gioHang = Cart;
 			var item = gioHang.SingleOrDefault(p => p.MaHH == id);
@@ -67,8 +67,8 @@ namespace MotoBikeShop.Controllers
 
 			return RedirectToAction("Index");
 		}
-
-		public IActionResult RemoveCart(int id)
+      // xóa sp ở giỏ hàng
+        public IActionResult RemoveCart(int id)
 		{
 			var gioHang = Cart;
 			var item = gioHang.SingleOrDefault(p => p.MaHH == id);
@@ -79,6 +79,7 @@ namespace MotoBikeShop.Controllers
 			}
 			return RedirectToAction("Index");
 		}
+        // thanh toán
 		[Authorize]
 		[HttpGet]
 		public IActionResult Checkout()
@@ -282,7 +283,7 @@ namespace MotoBikeShop.Controllers
         }
 
 			
-		
+		// result check out
 		[Authorize]
 
 		public IActionResult Success()
@@ -295,6 +296,56 @@ namespace MotoBikeShop.Controllers
 		{
 			return View();
 		}
-	}
+        // giam so luong
+        public IActionResult Down(int id)
+        {
+            var giohang = Cart;
+            CartItem item = giohang.Where(p=>p.MaHH == id).FirstOrDefault();
+            if (item.SoLuong>1)
+            {
+                --item.SoLuong;
+            }
+            else
+            {
+                giohang.RemoveAll(p => p.MaHH == id);
+            }
+            if (giohang.Count == 0)
+            {
+                HttpContext.Session.Remove(MySetting.CART_KEY);
+            }
+            else
+            {
+                HttpContext.Session.Set(MySetting.CART_KEY,giohang);
+            }
+
+                return RedirectToAction("Index");
+        }
+        // tăng số lượng
+        public IActionResult Up(int id)
+        {
+            var giohang = Cart;
+            CartItem item = giohang.Where(p => p.MaHH == id).FirstOrDefault();
+            if (item.SoLuong > 1)
+            {
+                ++item.SoLuong;
+            }
+            else
+            {
+                giohang.RemoveAll(p => p.MaHH == id);
+            }
+            if (giohang.Count == 0)
+            {
+                HttpContext.Session.Remove(MySetting.CART_KEY);
+            }
+            else
+            {
+                HttpContext.Session.Set(MySetting.CART_KEY, giohang);
+            }
+
+            return RedirectToAction("Index");
+        }
+
+
+    }
 }
 	

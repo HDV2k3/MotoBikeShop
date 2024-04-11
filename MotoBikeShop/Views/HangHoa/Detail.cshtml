@@ -613,7 +613,6 @@
     right: -6px;
     background-color: #c00
 }
-
 </style>
 
 <div id="motor-detail" class="container">
@@ -634,7 +633,7 @@
             <h4 class="d-block d-lg-none" style="font-weight:bold">Giá từ:@Model.DonGia.ToString("#,##0.00")</h4>
             <div class="characteristics-desc">
                 <h5>Mô Tả</h5>
-                <p class="text-justify">@Model.MoTaNgan</p>
+                <p class="text-justify">@Model.ChiTiet</p>
             </div>
         </div>
         <div class="col-12 col-lg-5 overview-right">
@@ -649,26 +648,8 @@
                         </a>
                         <div id="collapse-design" class="accordion-body collapse" aria-labelledby="heading-design" data-parent="#accordion-overview" style="">
                             <div class="row ">
-                                <div class="col-6 col-lg-4 spec_item design_item">
-                                    <img src="https://cdn.honda.com.vn/motorbike-strong-points/November2023/SCorydS0P95673UFqEME.png" alt="">
-                                    <p>4 phiên bản với màu sắc đa dạng</p>
-                                </div>
-                                <div class="col-6 col-lg-4 spec_item design_item">
-                                    <img src="https://cdn.honda.com.vn/motorbike-strong-points/November2023/3se57aukvnCXrxyT9dFp.png" alt="">
-                                    <p>Kiểu dáng sang trọng</p>
-                                </div>
-                                <div class="col-6 col-lg-4 spec_item design_item">
-                                    <img src="https://cdn.honda.com.vn/motorbike-strong-points/November2023/gbN6vyiYSs8BcNdtARg8.png" alt="">
-                                    <p>Thiết kế phía trước tinh tế</p>
-                                </div>
-                                <div class="col-6 col-lg-4 spec_item design_item">
-                                    <img src="https://cdn.honda.com.vn/motorbike-strong-points/November2023/ltOk8mRSLn8hBPPmbYb2.png" alt="">
-                                    <p>Mặt đồng hồ hiện đại</p>
-                                </div>
-                                <div class="col-6 col-lg-4 spec_item design_item">
-                                    <img src="https://cdn.honda.com.vn/motorbike-strong-points/November2023/oksSn1Qe7rZ0bNAb3zyg.png" alt="">
-                                    <p>Logo 3D nổi bật</p>
-                                </div>
+                              
+                                <p>@Model.ThietKe</p>
                             </div>
                         </div>
                     </div>
@@ -680,14 +661,8 @@
                         </a>
                         <div id="collapse-tech" class="collapse accordion-body" aria-labelledby="heading-tech" data-parent="#accordion-overview">
                             <div class="row">
-                                <div class="col-6 col-lg-4 spec_item  tech_item">
-                                    <img class="w-100" src="https://cdn.honda.com.vn/motorbike-strong-points/November2023/dHu3MgNqymuLuP1KWyL3.png" alt="">
-                                    <p>Động cơ eSP+ 4 van</p>
-                                </div>
-                                <div class="col-6 col-lg-4 spec_item  tech_item">
-                                    <img class="w-100" src="https://cdn.honda.com.vn/motorbike-strong-points/November2023/DsOxurqbQqBHKPCD4qSy.png" alt="">
-                                    <p>Khung dập thế hệ mới eSAF</p>
-                                </div>
+                            
+                                <p>@Model.DongCoCongNghe</p>
                             </div>
                         </div>
                     </div>
@@ -699,23 +674,8 @@
 
                         <div id="collapse-utility" class="collapse accordion-body" aria-labelledby="heading-utility" data-parent="#accordion-overview">
                             <div class="row ">
-                                <div class="col-6 col-lg-4 spec_item utility_item">
-                                    <img class="w-100" src="https://cdn.honda.com.vn/motorbike-strong-points/November2023/A6jxiSuctGvbqkx09cUV.png" alt="">
-                                    <p>Hệ thống chống bó cứng phanh (ABS)</p>
-                                </div>
-                                <div class="col-6 col-lg-4 spec_item utility_item">
-                                    <img class="w-100" src="https://cdn.honda.com.vn/motorbike-strong-points/November2023/mdP86GP6SJzSloxEgw5j.png" alt="">
-                                    <p>Hộc để đồ phía trước có trang bị cổng sạc USB</p>
-                                </div>
-                                <div class="col-6 col-lg-4 spec_item utility_item">
-                                    <img class="w-100" src="https://cdn.honda.com.vn/motorbike-strong-points/November2023/qyePszZLEg9Q6CSD5qx8.png" alt="">
-                                    <p>Hộc đựng đồ dưới yên rộng rãi</p>
-                                </div>
-                                <div class="col-6 col-lg-4 spec_item utility_item">
-                                    <img class="w-100" src="https://cdn.honda.com.vn/motorbike-strong-points/November2023/kpMVvYjsNKSCSYspYwI5.png" alt="">
-                                    <p>Hệ thống khóa thông minh Smart Key</p>
-                                </div>
-                                <p>@</p>
+                             
+                                <p>@Model.TienIchAnToan</p>
                             </div>
                         </div>
                     </div>

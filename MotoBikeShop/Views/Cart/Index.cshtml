@@ -3,7 +3,14 @@
     ViewData["Title"] = "Giỏ Hàng";
 }
 
-
+<head>
+    <style>
+        .total-price {
+            font-weight: bold;
+            color: red;
+        }
+    </style>
+</head>
 <body>
     <!-- Single Page Header start -->
     <div class="container-fluid page-header py-5">
@@ -52,15 +59,21 @@
                                 <td>
                                     <div class="input-group quantity mt-4" style="width: 100px;">
                                         <div class="input-group-btn">
-                                            <button class="btn btn-sm btn-minus rounded-circle bg-light border">
-                                                <i class="fa fa-minus"></i>
-                                            </button>
+                                            <form asp-action="Down" asp-controller="Cart" asp-route-id="@item.MaHH">
+                                                <button class="btn btn-sm btn-minus rounded-circle bg-light border">
+                                                    <i  class="fa fa-minus"></i>
+                                                </button>
+                                            </form>
+                                           
                                         </div>
                                         <input type="number" class="form-control form-control-sm text-center border-0" value="@item.SoLuong" min="1" name="Quantity">
                                         <div class="input-group-btn">
-                                            <button class="btn btn-sm btn-plus rounded-circle bg-light border btn-plus">
-                                                <i class="fa fa-plus"></i>
-                                            </button>
+                                            <form asp-action="Up" asp-controller="Cart" asp-route-id="@item.MaHH">
+                                                <button class="btn btn-sm btn-plus rounded-circle bg-light border btn-plus">
+                                                    <i class="fa fa-plus"></i>
+                                                </button>
+                                            </form>
+                                           
                                         </div>
                                     </div>
                                 </td>
