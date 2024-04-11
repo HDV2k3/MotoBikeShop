@@ -49,7 +49,7 @@
 
     <!-- Phần body -->
     <div class="container">
-        <h2>Products</h2>
+        <h2>Hàng Hóa</h2>
         <div class="row">
             @foreach (var product in Model)
             {
@@ -57,9 +57,9 @@
                     <div class="card product-card">
                         <img class="card-img-top product-image" src="~/images/@product.Hinh" alt="Product Image">
                         <div class="card-body product-details">
-                            <p class="card-text product-price">@product.MaHH</p>
+                          @*   <p class="card-text product-price">@product.MaHH</p> *@
                             <h5 class="card-title product-title">@product.TenHH</h5>
-                            <p class="card-text product-price">@product.TenAlias</p>
+@*                             <p class="card-text product-price">@product.TenAlias</p>
                             <p class="card-text product-price">@product.MoTaDonVi</p>
                             <p class="card-text product-price"> @product.DonGia</p>
                             <p class="card-text product-price">@product.NgaySX</p>
@@ -67,7 +67,7 @@
                             <p class="card-text product-price">@product.SoLanXem</p>
                             <p class="card-text product-description">@product.MoTa</p>
                             <p class="card-text product-price">@product.MaLoaiNavigation?.TenLoai</p>
-                            <p class="card-text product-price">@product.MaNCC</p>
+                            <p class="card-text product-price">@product.MaNCC</p> *@
 
 
                         </div>

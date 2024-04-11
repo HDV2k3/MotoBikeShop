@@ -8,10 +8,7 @@
         <div class="p-5 bg-light rounded">
             <div class="row g-4">
                 <div class="col-12">
-                    <div class="text-center mx-auto" style="max-width: 700px;">
-                        <h1 class="text-danger">Get in touch</h1>
-                        <p class="mb-4">The contact form is currently inactive. Get a functional and working contact form with Ajax & PHP in a few minutes. Just copy and paste the files, add a little code and you're done. <a href="https://htmlcodex.com/contact-form">Download Now</a>.</p>
-                    </div>
+                
                 </div>
                 <div class="col-lg-12">
                     <div class="h-100 rounded">
@@ -21,12 +18,13 @@
                     </div>
                 </div>
                 <div class="col-lg-7">
-                    <form action="" class="">
-                        <input type="text" class="w-100 form-control border-0 py-3 mb-4" placeholder="Your Name">
-                        <input type="email" class="w-100 form-control border-0 py-3 mb-4" placeholder="Enter Your Email">
-                        <textarea class="w-100 form-control border-0 mb-4" rows="5" cols="10" placeholder="Your Message"></textarea>
+                    <form asp-action="SubmitEmail" asp-controller="EmailCustomers" class="">
+                        <input type="text" class="w-100 form-control border-0 py-3 mb-4" placeholder="Your Name" name="Name">
+                        <input type="email" class="w-100 form-control border-0 py-3 mb-4" placeholder="Enter Your Email" name="Email">
+                        <textarea class="w-100 form-control border-0 mb-4" rows="5" cols="10" placeholder="Your Message" name="Note"></textarea>
                         <button class="w-100 btn form-control border-secondary py-3 bg-white text-danger " type="submit">Submit</button>
                     </form>
+
                 </div>
                 <div class="col-lg-5">
 

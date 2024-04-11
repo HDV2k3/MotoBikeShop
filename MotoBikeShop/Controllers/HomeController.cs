@@ -18,7 +18,7 @@ namespace MotoBikeShop.Controllers
             return View();
         }
         [Route("/404")]
-           public IActionResult PageNotFound()
+        public IActionResult PageNotFound()
         {
             return View();
         }

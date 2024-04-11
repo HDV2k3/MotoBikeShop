@@ -12,5 +12,9 @@ namespace MotoBikeShop.Models
 
         [EmailAddress]
         public string Email { get; set; }
+
+        public string? Name { get; set; }
+
+        public string? Note { get; set; }
     }
 }

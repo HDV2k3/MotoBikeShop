@@ -13,22 +13,22 @@ using static MotoBikeShop.Service.Models;
 namespace MotoBikeShop.Controllers
 {
     public class HangHoaController : Controller
-        {
+    {
 
-            //private readonly ICartService _cartService;
-            private readonly motoBikeVHDbContext db;
+        //private readonly ICartService _cartService;
+        private readonly motoBikeVHDbContext db;
 
         private readonly HttpClient _httpClient;
 
-      
-           
+
+
         public HangHoaController(motoBikeVHDbContext context)
-            {
-                db = context;
-                _httpClient = new HttpClient();
-            
+        {
+            db = context;
+            _httpClient = new HttpClient();
+
         }
-        public IActionResult Index(int? loai, int? page,string? ncc)
+        public IActionResult Index(int? loai, int? page, string? ncc)
         {
             var hanghoas = db.HangHoas.AsQueryable();
             if (loai.HasValue)
@@ -64,24 +64,24 @@ namespace MotoBikeShop.Controllers
             return View(pagedHanghoas);
         }
         public IActionResult Search(String? query)
+        {
+            var hanghoas = db.HangHoas.AsQueryable();
+            if (query != null)
             {
-                var hanghoas = db.HangHoas.AsQueryable();
-                if (query != null)
-                {
-                    hanghoas = hanghoas.Where(p => p.TenHH.Contains(query));
+                hanghoas = hanghoas.Where(p => p.TenHH.Contains(query));
 
-                }
-                var result = hanghoas.Select(p => new HangHoaVM
-                {
-                    MaHh = p.MaHH,
-                    TenHh = p.TenHH,
-                    DonGia = p.DonGia ?? 0,
-                    Hinh = p.Hinh ?? "",
-                    MoTaNgan = p.MoTaDonVi ?? "",
-                    TenLoai = p.MaLoaiNavigation.TenLoai
-                });
-                return View(result);
             }
+            var result = hanghoas.Select(p => new HangHoaVM
+            {
+                MaHh = p.MaHH,
+                TenHh = p.TenHH,
+                DonGia = p.DonGia ?? 0,
+                Hinh = p.Hinh ?? "",
+                MoTaNgan = p.MoTaDonVi ?? "",
+                TenLoai = p.MaLoaiNavigation.TenLoai
+            });
+            return View(result);
+        }
         public IActionResult Detail(int id)
         {
             var data = db.HangHoas
@@ -96,7 +96,7 @@ namespace MotoBikeShop.Controllers
             var result = new CTHangHoaVM
             {
 
-				MaLoai=data.MaLoai,
+                MaLoai = data.MaLoai,
                 MaHh = data.MaHH,
                 TenHh = data.TenHH,
                 DonGia = data.DonGia ?? 0,
@@ -106,12 +106,11 @@ namespace MotoBikeShop.Controllers
                 TenLoai = data.MaLoaiNavigation.TenLoai,
                 SoLuongTon = 10,//tính sau
                 DiemDanhGia = 5,//check sau
-               
+
             };
             return View(result);
-            }
-       
-  
-	}
+        }
 
     }
+
+}

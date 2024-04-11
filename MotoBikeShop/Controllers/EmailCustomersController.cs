@@ -19,13 +19,13 @@ namespace MotoBikeShop.Controllers
             _context = context;
         }
 
-      
+
         // POST: EmailCustomers/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> SubmitEmail([Bind("IdEmail,Email")] EmailCustomer emailCustomer)
+        public async Task<IActionResult> SubmitEmail([Bind("IdEmail,Email,Name,Note")] EmailCustomer emailCustomer)
         {
             if (ModelState.IsValid)
             {
@@ -34,7 +34,7 @@ namespace MotoBikeShop.Controllers
             }
             return View(emailCustomer);
         }
-       
+
 
     }
 }
