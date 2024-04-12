@@ -79,6 +79,8 @@ namespace MotoBikeShop.Areas.Identity.Pages.Account
         {
             [Required]
             public string FullName { get; set; }
+
+            public DateTime DaySignUp {  get; set; } = DateTime.Now;
             /*  public string LastName { get; set; }
               public string Address { get; set; }
               public int Age { get; set; }*/
@@ -145,6 +147,7 @@ namespace MotoBikeShop.Areas.Identity.Pages.Account
                 var user = CreateUser();
 
                 user.FullName = Input.FullName;
+                user.DaySignUp = Input.DaySignUp;
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
                 var result = await _userManager.CreateAsync(user, Input.Password);
