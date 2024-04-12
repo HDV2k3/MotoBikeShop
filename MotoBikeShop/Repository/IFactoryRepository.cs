@@ -9,5 +9,7 @@ namespace MotoBikeShop.Repository
         Task AddAsync(NhaCungCap product);
         Task UpdateAsync(NhaCungCap product);
         Task DeleteAsync(string id);
+        Task<IEnumerable<NhaCungCap>> SearchAsync(string keyword);
+
     }
 }

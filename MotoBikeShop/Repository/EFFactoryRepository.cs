@@ -15,17 +15,13 @@ namespace MotoBikeShop.Repository
             _context.NhaCungCaps.Add(nhaCungCap);
            await _context.SaveChangesAsync();
         }
-
         public async Task DeleteAsync(string id)
         {
             var nhacungcap = await _context.NhaCungCaps.FindAsync(id);
             _context.NhaCungCaps.Remove(nhacungcap);
             await _context.SaveChangesAsync();
           
-        }
-
-      
-
+        }     
         public async Task<IEnumerable<NhaCungCap>> GetAllAsync()
         {
             return await _context.NhaCungCaps.ToListAsync();
@@ -34,6 +30,14 @@ namespace MotoBikeShop.Repository
         public async Task<NhaCungCap> GetByIdAsync(string id)
         {
             return await _context.NhaCungCaps.Include(p => p.MaNCC).FirstOrDefaultAsync(p=>p.MaNCC==id );    
+        }
+
+        public async Task<IEnumerable<NhaCungCap>> SearchAsync(string keyword)
+        {
+            return await _context.NhaCungCaps
+              .Include(p => p.MaNCC)
+              .Where(t => t.TenCongTy.Contains(keyword) || t.MoTa.Contains(keyword))
+              .ToListAsync();
         }
 
         public async Task UpdateAsync(NhaCungCap nhaCungCap)

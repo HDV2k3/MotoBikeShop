@@ -1,7 +1,6 @@
 ﻿
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors.Infrastructure;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using MotoBikeShop.Data;
@@ -11,7 +10,6 @@ using MotoBikeShop.Momo;
 using MotoBikeShop.Repository;
 using MotoBikeShop.ViewModels;
 using Newtonsoft.Json.Linq;
-using System.Net;
 using System.Security.Claims;
 
 namespace MotoBikeShop.Controllers
@@ -20,8 +18,6 @@ namespace MotoBikeShop.Controllers
     {
         private readonly motoBikeVHDbContext db;
         private readonly UserManager<ApplicationUser> _userManager;
-        MoMoSecurity crypto = new MoMoSecurity();
-        string endpoint = "https://test-payment.momo.vn/gw_payment/transactionProcessor";
 
         //private readonly ICartService _cartService;
         public CartController(motoBikeVHDbContext context, UserManager<ApplicationUser> userManager)
@@ -174,8 +170,8 @@ namespace MotoBikeShop.Controllers
                     string serectkey = "sFcbSGRSJjwGxwhhcEktCHWYUuTuPNDB";
                     string orderInfo = "MotoBike Shop";
                     string returnUrl = "https://localhost:44375/Cart/Success";
-                    string notifyurl = "https://localhost:44375/Cart/Error"; //lưu ý: notifyurl không được sử dụng localhost, có thể sử dụng ngrok để public localhost trong quá trình test
-                    string amount = model.TongTien.Replace(".", "").Replace(",00", "").Replace("VND", "");
+                    string notifyurl = "https://localhost:44375/Cart/SavePayment"; //lưu ý: notifyurl không được sử dụng localhost, có thể sử dụng ngrok để public localhost trong quá trình test
+                    string amount = model.TongTien.Replace(".", "").Replace(",", "").Replace("VND", "");
                     string orderid = DateTime.Now.Ticks.ToString(); //mã đơn hàng
                     string requestId = DateTime.Now.Ticks.ToString();
                     string extraData = "";
@@ -192,6 +188,7 @@ namespace MotoBikeShop.Controllers
                         notifyurl + "&extraData=" +
                         extraData;
 
+                    MoMoSecurity crypto = new MoMoSecurity();
                     //sign signature SHA256
                     string signature = crypto.signSHA256(rawHash, serectkey);
 
@@ -217,10 +214,9 @@ namespace MotoBikeShop.Controllers
 
                     if (jmessage.TryGetValue("payUrl", out JToken payUrlToken))
                     {
-
                         var customerId = User.FindFirstValue(ClaimTypes.NameIdentifier);
                         var khachHang = new ApplicationUser();
-
+                    
                         var hoadon = new HoaDon
                         {
                             UserId = customerId,
@@ -268,14 +264,11 @@ namespace MotoBikeShop.Controllers
                             db.Database.RollbackTransaction();
                             return View("Error");
                         }
-                        return Redirect(payUrlToken.ToString());
-                      
                     }
-           
-                 
                     else
                     {
-                      
+                        // Handle error when "payUrl" does not exist in the response
+                        // For example, you may want to redirect to an error page or back to the checkout form
                         return View("Error");
                     }
 
@@ -284,8 +277,6 @@ namespace MotoBikeShop.Controllers
             else { return View("Error"); }
             return View(model);
         }
-
-     
 
         // result check out 
         [Authorize]

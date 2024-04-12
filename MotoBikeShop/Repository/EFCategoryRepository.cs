@@ -38,6 +38,13 @@ namespace MotoBikeShop.Repository
             await _context.SaveChangesAsync();
         }
 
+        public async Task<IEnumerable<Loai>> SearchAsync(string keyword)
+        {
+            return await _context.Loais
+              .Include(p => p.MaLoai)
+              .Where(t => t.TenLoai.Contains(keyword) || t.MoTa.Contains(keyword))
+              .ToListAsync();
+        }
 
     }
 }

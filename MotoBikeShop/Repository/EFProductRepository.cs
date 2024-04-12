@@ -17,8 +17,6 @@ namespace MotoBikeShop.Repository
         }
         public async Task<HangHoa> GetByIdAsync(int id)
         {
-            // return await _context.Products.FindAsync(id);
-            // lấy thông tin kèm theo category
             return await _context.HangHoas.Include(p => p.MaLoaiNavigation).FirstOrDefaultAsync(p => p.MaHH == id);
         }
         public async Task AddAsync(HangHoa product)
@@ -36,6 +34,14 @@ namespace MotoBikeShop.Repository
             var product = await _context.HangHoas.FindAsync(id);
             _context.HangHoas.Remove(product);
             await _context.SaveChangesAsync();
+        }
+
+        public async Task<IEnumerable<HangHoa>> SearchAsync(string keyword)
+        {
+            return await _context.HangHoas
+               .Include(p => p.MaLoaiNavigation)
+               .Where(t => t.TenHH.Contains(keyword) || t.MoTa.Contains(keyword))
+               .ToListAsync();
         }
     }
 }

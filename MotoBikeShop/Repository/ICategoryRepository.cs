@@ -11,6 +11,7 @@ namespace MotoBikeShop.Repository
         Task AddAsync(Loai category);
         Task UpdateAsync(Loai category);
         Task DeleteAsync(int id);
-        
+        Task<IEnumerable<Loai>> SearchAsync(string keyword);
+
     }
 }

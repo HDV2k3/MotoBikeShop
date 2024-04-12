@@ -15,13 +15,9 @@ namespace MotoBikeShop.Controllers
     public class HangHoaController : Controller
     {
 
-        //private readonly ICartService _cartService;
         private readonly motoBikeVHDbContext db;
 
         private readonly HttpClient _httpClient;
-
-
-
         public HangHoaController(motoBikeVHDbContext context)
         {
             db = context;

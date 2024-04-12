@@ -1,6 +1,6 @@
-﻿using MotoBikeShop.Data;
-using MotoBikeShop.Models;
+﻿using MotoBikeShop.Models;
 using MotoBikeShop.ViewModels;
+using MotoBikeShop.Data;
 
 namespace MotoBikeShop.Repository
 {
@@ -11,5 +11,6 @@ namespace MotoBikeShop.Repository
         Task AddAsync(HangHoa product);
         Task UpdateAsync(HangHoa product);
         Task DeleteAsync(int id);
+        Task<IEnumerable<HangHoa>> SearchAsync(string keyword);
     }
 }
