@@ -67,7 +67,7 @@
                             <li class="nav-item">
                                 <a class="nav-link text-dark" id="cart-link" href="/Cart/Index">Cart</a>
                             </li>
-                            
+
                             <a id="contact-link" asp-controller="Contact" asp-action="Index" class="nav-item nav-link ">Contact</a>
                             <partial name="_LoginPartial">
 
@@ -75,7 +75,7 @@
                         <div class="d-flex m-3 me-0">
                             <button class="btn-search btn border border-secondary btn-md-square rounded-circle bg-white me-4" data-bs-toggle="modal" data-bs-target="#searchModal"><i class="fas fa-search text-danger"></i></button>
                             @await Component.InvokeAsync("Cart")
-                     
+
                         </div>
                     </div>
                 </nav>
@@ -103,8 +103,8 @@
         <div style="min-height:400px;">
             @RenderBody()
         </div>
-        @await Html.PartialAsync("_LayoutFooter")     
-</div>
+        @await Html.PartialAsync("_LayoutFooter")
+    </div>
     <!-- Back to Top -->
     <a href="#" class="btn btn-danger border-3 border-danger rounded-circle back-to-top"><i class="fa fa-arrow-up"></i></a>
 

@@ -58,34 +58,17 @@ app.UseSession();
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapControllerRoute(
- name: "default",
- pattern: "{controller=Home}/{action=Index}/{id?}");
-
-//app.MapControllerRoute(
-// name: "admin",
-// pattern: "{controller=Home}/{action=Index}/{id?}");
-//app.UseEndpoints(endpoints =>
-//{
-//    endpoints.MapControllerRoute(
-//      name: "areas",
-//      pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
-//    );
-//});
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllerRoute(
         name: "admin",
-        pattern: "{area:exists}/{controller=Product}/{action=Index}/{id?}"
+        pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+    );
+
+    endpoints.MapControllerRoute(
+        name: "default",
+        pattern: "{controller=Home}/{action=Index}/{id?}"
     );
 });
-app.UseEndpoints(endpoints =>
-{
-    endpoints.MapControllerRoute(
-             name: "updateQuantity",
-             pattern: "CartController/UpdateQuantity/{id}/{quantity}",
-             defaults: new { controller = "Cart", action = "UpdateQuantity" });
-});
-
 
 app.Run();

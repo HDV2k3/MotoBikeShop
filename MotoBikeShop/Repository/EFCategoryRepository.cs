@@ -37,7 +37,6 @@ namespace MotoBikeShop.Repository
             _context.Loais.Remove(category);
             await _context.SaveChangesAsync();
         }
-
         public async Task<IEnumerable<Loai>> SearchAsync(string keyword)
         {
             return await _context.Loais
