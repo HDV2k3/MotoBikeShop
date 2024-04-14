@@ -14,7 +14,6 @@ public partial class motoBikeVHDbContext : IdentityDbContext<ApplicationUser>
         : base(options)
     {
     }
-    public DbSet<DoanhThuTheoNgay> DoanhThuTheoNgays { get; set; }
     public DbSet<ApplicationUser> applicationUsers { get; set; }
     public DbSet<ChiTietHd> ChiTietHds { get; set; }
 

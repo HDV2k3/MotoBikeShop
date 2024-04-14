@@ -6,7 +6,6 @@ namespace MotoBikeShop.Areas.Admin.Models
     {
         [Key]
         public double RevenueDay { get; set; }
-        public double RevenueMonth { get; set; }
 
     }
 }
