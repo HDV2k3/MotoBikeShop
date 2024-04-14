@@ -40,6 +40,8 @@
 
   <ItemGroup>
     <Folder Include="Areas\Admin\Data\" />
+    <Folder Include="Areas\Admin\Views\Category\" />
+    <Folder Include="Areas\Admin\Views\Factory\" />
     <Folder Include="wwwroot\images\Exciter\" />
     <Folder Include="wwwroot\images\Future\" />
     <Folder Include="wwwroot\images\siriusFi\" />
