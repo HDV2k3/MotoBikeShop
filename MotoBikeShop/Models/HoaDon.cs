@@ -17,7 +17,6 @@ namespace MotoBikeShop.Data
         [Required]
         public DateTime NgayDat { get; set; }
 
-
         public DateTime? NgayGiao { get; set; }
 
         [MaxLength(50)]
