@@ -1,9 +1,24 @@
-﻿<form name="SearchForm" asp-action="Search" asp-controller="HangHoa">
-	<div class="input-group w-100 mx-auto d-flex">
-		<input type="search" class="form-control p-3" placeholder="TimKiem" aria-describedby="searchButton" name="query" id="searchText">
-		<button>
-			<span id="searchButton" class="input-group-text p-3" onclick="SearchForm.submit()"><i class="fa fa-search"></i></span>
-		</button>
-	
-	</div>
+﻿<style>
+    /* Định dạng cho input */
+    input.form-control {
+        border: 2px solid red;
+    }
+
+    /* Định dạng cho button tìm kiếm */
+    button.btn-primary {
+        background-color: #dc4535;
+        border: none;
+    }
+
+        button.btn-primary:hover {
+            background-color: lightgreen;
+        }
+</style>
+<form name="SearchForm" asp-action="Search" asp-controller="HangHoa">
+    <div class="input-group w-100 mx-auto d-flex">
+        <input type="search" class="form-control p-3" placeholder="TimKiem" aria-describedby="searchButton" name="query" id="searchText">
+        <button type="submit" class="btn btn-primary">
+            <span id="searchButton" class="input-group-text p-3"><i class="fa fa-search"></i></span>
+        </button>
+    </div>
 </form>

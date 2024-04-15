@@ -296,7 +296,7 @@ namespace MotoBikeShop.Controllers
         {
             var giohang = Cart;
             CartItem item = giohang.Where(p => p.MaHH == id).FirstOrDefault();
-            if (item.SoLuong > 1)
+            if (item.SoLuong >= 1)
             {
                 --item.SoLuong;
             }
@@ -320,7 +320,7 @@ namespace MotoBikeShop.Controllers
         {
             var giohang = Cart;
             CartItem item = giohang.Where(p => p.MaHH == id).FirstOrDefault();
-            if (item.SoLuong > 1)
+            if (item.SoLuong >= 1)
             {
                 ++item.SoLuong;
             }

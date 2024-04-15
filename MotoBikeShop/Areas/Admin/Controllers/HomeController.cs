@@ -40,10 +40,14 @@ namespace MotoBikeShop.Areas.Admin.Controllers
                     cmd.Parameters.AddWithValue("@CurrentDate", currentDate);
 
                     object result = cmd.ExecuteScalar();
-
-                    if (result!=null)
+                 
+                    if (result != DBNull.Value && result !=null)
                     {
                        doanhThuNgay =Convert.ToDouble(result);
+                    }
+                    else
+                    {
+                        doanhThuNgay = 0.0;
                     }
                    
                 }
