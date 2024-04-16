@@ -212,6 +212,7 @@ namespace MotoBikeShop.Areas.Admin
             var poducts = await _productRepository.SearchAsync(keyword);
             return View(poducts);
         }
-
+        
+      
     }
 }

@@ -171,7 +171,7 @@ namespace MotoBikeShop.Controllers
                     string orderInfo = "MotoBike Shop";
                     string returnUrl = "https://localhost:44375/Cart/Success";
                     string notifyurl = "https://localhost:44375/Cart/SavePayment"; //lưu ý: notifyurl không được sử dụng localhost, có thể sử dụng ngrok để public localhost trong quá trình test
-                    string amount = model.TongTien.Replace(".", "").Replace(",", "").Replace("VND", "");
+                    string amount = model.TongTien.Replace(".", "").Replace(",00","").Replace("VND", "");
                     string orderid = DateTime.Now.Ticks.ToString(); //mã đơn hàng
                     string requestId = DateTime.Now.Ticks.ToString();
                     string extraData = "";
