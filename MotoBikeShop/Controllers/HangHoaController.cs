@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MotoBikeShop.Data;
-using MotoBikeShop.Migrations;
 using MotoBikeShop.Models;
 using MotoBikeShop.Repository;
 using MotoBikeShop.ViewModels;
@@ -82,6 +81,7 @@ namespace MotoBikeShop.Controllers
         {
             var data = db.HangHoas
                 .Include(p => p.MaLoaiNavigation)
+                .Include(p=>p.MaTSKTNavigation)
                 .SingleOrDefault(p => p.MaHH == id);
             if (data == null)
             {
@@ -102,6 +102,28 @@ namespace MotoBikeShop.Controllers
                 TenLoai = data.MaLoaiNavigation.TenLoai,
                 SoLuongTon = 10,//tính sau
                 DiemDanhGia = 5,//check sau
+                ThietKe=data.ThietKe,
+                DongCoCongNghe=data.DongCoCongNghe,
+                TienIchAnToan=data.TienIchAnToan,
+               khoiluongbanthan=data.MaTSKTNavigation.khoiluongbanthan,
+               dairongcao=data.MaTSKTNavigation.dairongcao,
+               khoangcachtrucxe=data.MaTSKTNavigation.khoangcachtrucxe,
+               docaoyen=data.MaTSKTNavigation.docaoyen,
+               khoangsanggamxe=data.MaTSKTNavigation.khoangsanggamxe,
+               dungtichbinhxang=data.MaTSKTNavigation.dungtichbinhxang,
+               kichthuocloptruocsau=data.MaTSKTNavigation.kichthuocloptruocsau,
+               phuoctruoc=data.MaTSKTNavigation.phuoctruoc,
+               phuocsau=data.MaTSKTNavigation.phuocsau,
+               loaidongco=data.MaTSKTNavigation.loaidongco,
+               congsuattoida=data.MaTSKTNavigation.congsuattoida,
+               dungtichnhotmay=data.MaTSKTNavigation.dungtichnhotmay,
+               muctieuthunhienlieu=data.MaTSKTNavigation.muctieuthunhienlieu,
+               loaitruyendong = data.MaTSKTNavigation.loaitruyendong,
+               hethongkhoidong=data.MaTSKTNavigation.hethongkhoidong,
+               momentcucdai=data.MaTSKTNavigation.momentcucdai,
+               dungtichxylanh=data.MaTSKTNavigation.dungtichxylanh,
+               duongkinhhanhtrinhpittong=data.MaTSKTNavigation.duongkinhhanhtrinhpittong,
+               tysonen=data.MaTSKTNavigation.tysonen,
 
             };
             return View(result);

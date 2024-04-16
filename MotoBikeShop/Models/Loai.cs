@@ -6,7 +6,6 @@ namespace MotoBikeShop.Data
     public class Loai
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int MaLoai { get; set; }
 
         [Required]

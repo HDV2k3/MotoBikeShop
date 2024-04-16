@@ -8,11 +8,9 @@ namespace MotoBikeShop.Data
     public class HangHoa
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int MaHH { get; set; }
 
         [Required]
-        [MaxLength(50)]
         public string TenHH { get; set; }
 
         [MaxLength(50)]
@@ -20,12 +18,10 @@ namespace MotoBikeShop.Data
 
         public int MaLoai { get; set; }
 
-        [MaxLength(50)]
         public string MoTaDonVi { get; set; }
 
         public double? DonGia { get; set; }
 
-        [MaxLength(50)]
         public string Hinh { get; set; }
 
         [Required]
@@ -43,6 +39,7 @@ namespace MotoBikeShop.Data
         [Required]
  
         public string MaNCC { get; set; }
+        public int MaTSKT {  get; set; }
 
         public virtual ICollection<ChiTietHd> ChiTietHds { get; set; } = new List<ChiTietHd>();
 
@@ -52,6 +49,8 @@ namespace MotoBikeShop.Data
         public virtual Loai MaLoaiNavigation { get; set; } = null!;
 
         [ForeignKey("MaNCC")]
-        public virtual NhaCungCap MaNccNavigation { get; set; } = null!;       
+        public virtual NhaCungCap MaNccNavigation { get; set; } = null!;
+        [ForeignKey("MaTSKT")]
+        public virtual ThongSoKyThuat MaTSKTNavigation { get; set; } = null!;
     }
 }

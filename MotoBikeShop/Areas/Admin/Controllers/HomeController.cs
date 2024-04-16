@@ -30,7 +30,7 @@ namespace MotoBikeShop.Areas.Admin.Controllers
             double doanhThuThang = 0;
             double PhanTramDoanhThu = 0;
             double ConutEmail = 0;
-            using (SqlConnection con = new SqlConnection("Data Source=LAPTOP-S31L0IIU;Initial Catalog=motoBikeVH;Integrated Security=True;Trust Server Certificate=True"))
+            using (SqlConnection con = new SqlConnection("Data Source=LAPTOP-S31L0IIU;Initial Catalog=Hutech;Integrated Security=True;Trust Server Certificate=True"))
             {
                 con.Open();
 
@@ -59,9 +59,13 @@ namespace MotoBikeShop.Areas.Admin.Controllers
 
                     object result = cmd.ExecuteScalar(); // ExecuteScalar dùng cho trường hợp chỉ trả về một giá trị duy nhất
 
-                    if (result != null)
+                    if (result != DBNull.Value && result != null)
                     {
                         doanhThuThang = Convert.ToDouble(result);
+                    }
+                     else
+                    {
+                        doanhThuThang = 0.0;
                     }
                 }
                 using (SqlCommand cmd = new SqlCommand("CalculateRevenuePercentage", con))
@@ -70,9 +74,13 @@ namespace MotoBikeShop.Areas.Admin.Controllers
 
                     object result = cmd.ExecuteScalar(); // ExecuteScalar dùng cho trường hợp chỉ trả về một giá trị duy nhất
 
-                    if (result != null)
+                    if (result != DBNull.Value && result != null)
                     {
                         PhanTramDoanhThu = Convert.ToDouble(result);
+                    }
+                    else
+                    {
+                        PhanTramDoanhThu = 0.0;
                     }
                 }
                 using (SqlCommand cmd = new SqlCommand("CalculateRevenuePercentage", con))
@@ -147,7 +155,7 @@ namespace MotoBikeShop.Areas.Admin.Controllers
         }
         public IActionResult ThongKe()
         {
-            using (SqlConnection con = new SqlConnection("Data Source=LAPTOP-S31L0IIU;Initial Catalog=motoBikeVH;Integrated Security=True;Trust Server Certificate=True"))
+            using (SqlConnection con = new SqlConnection("Data Source=LAPTOP-S31L0IIU;Initial Catalog=Hutech;Integrated Security=True;Trust Server Certificate=True"))
             {
                 con.Open();
                 using (SqlCommand cmd = new SqlCommand("GetOrderDetailsByAll", con))

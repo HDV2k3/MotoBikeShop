@@ -17,7 +17,7 @@ namespace MotoBikeShop.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.3")
+                .HasAnnotation("ProductVersion", "8.0.4")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -206,8 +206,7 @@ namespace MotoBikeShop.Migrations
 
                     b.Property<string>("Hinh")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("MaLoai")
                         .HasColumnType("int");
@@ -216,14 +215,16 @@ namespace MotoBikeShop.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<int>("MaTSKT")
+                        .HasColumnType("int");
+
                     b.Property<string>("MoTa")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("MoTaDonVi")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("NgaySX")
                         .HasColumnType("datetime2");
@@ -238,8 +239,7 @@ namespace MotoBikeShop.Migrations
 
                     b.Property<string>("TenHH")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ThietKe")
                         .HasColumnType("nvarchar(max)");
@@ -253,53 +253,86 @@ namespace MotoBikeShop.Migrations
 
                     b.HasIndex("MaNCC");
 
+                    b.HasIndex("MaTSKT");
+
                     b.ToTable("HangHoas");
 
                     b.HasData(
                         new
                         {
                             MaHH = 1,
-                            DonGia = 400000.0,
-                            GiamGia = 9999999.0,
+                            DonGia = 40000000.0,
+                            DongCoCongNghe = "Mạnh Mẽ",
+                            GiamGia = 0.0,
                             Hinh = "xecon.png",
                             MaLoai = 1,
                             MaNCC = "NCC002",
-                            MoTa = "xe này cực đẹp",
+                            MaTSKT = 1,
+                            MoTa = "Yamaha Exciter 2024 là mẫu xe côn tay được ưa chuộng nhất tại thị trường Việt Nam với thiết kế mang đậm dấu ấn đặc trưng DNA của Yamaha. Bên cạnh phiên bản Exciter 150 rất được yêu thích từ trước đó, Yamaha Motor Việt Nam vừa ra mắt phiên bản Exciter 155 VVA mới nhất được phát triển như một chiếc \"Tiểu YZF-R1\".",
                             MoTaDonVi = "VND",
-                            NgaySX = new DateTime(2024, 4, 12, 16, 28, 1, 107, DateTimeKind.Local).AddTicks(5540),
+                            NgaySX = new DateTime(2024, 4, 16, 16, 45, 3, 326, DateTimeKind.Local).AddTicks(6717),
                             SoLanXem = 99,
                             TenAlias = "exciter",
-                            TenHH = "Exciter"
+                            TenHH = "Exciter",
+                            ThietKe = "Trẻ trung",
+                            TienIchAnToan = "Gọn Nhẹ"
                         },
                         new
                         {
                             MaHH = 2,
-                            DonGia = 300000.0,
-                            GiamGia = 9999999.0,
+                            DonGia = 30000000.0,
+                            DongCoCongNghe = "Mạnh Mẽ",
+                            GiamGia = 0.0,
                             Hinh = "xega.png",
                             MaLoai = 2,
                             MaNCC = "NCC001",
-                            MoTa = "xe này cực đẹp",
+                            MaTSKT = 2,
+                            MoTa = "Vario 125 sở hữu thiết kế thể thao vô cùng trẻ trung ấn tượng, khác biệt hẳn so với những mẫu xe tay ga phổ thông truyền thống, mang đậm dấu ấn cá nhân sành điệu, luôn khao khát thể hiện cái tôi & khẳng định một cách mạnh mẽ cá tính riêng biệt của chủ sở hữu.",
                             MoTaDonVi = "VND",
-                            NgaySX = new DateTime(2024, 4, 12, 16, 28, 1, 107, DateTimeKind.Local).AddTicks(5570),
+                            NgaySX = new DateTime(2024, 4, 16, 16, 45, 3, 326, DateTimeKind.Local).AddTicks(6737),
                             SoLanXem = 99,
                             TenAlias = "vario",
-                            TenHH = "Vario"
+                            TenHH = "Vario",
+                            ThietKe = "Trẻ trung",
+                            TienIchAnToan = "Gọn Nhẹ"
                         },
                         new
                         {
                             MaHH = 3,
-                            DonGia = 100000.0,
-                            GiamGia = 9999999.0,
+                            DonGia = 10000000.0,
+                            DongCoCongNghe = "Mạnh Mẽ",
+                            GiamGia = 0.0,
                             Hinh = "xeso.png",
                             MaLoai = 3,
-                            MaNCC = "NCC003",
-                            MoTa = "xe này cực đẹp",
+                            MaNCC = "NCC001",
+                            MaTSKT = 3,
+                            MoTa = "Phong cách thiết kế của Wave RSX FI là sự kết hợp hoàn hảo giữa yếu tố thể thao, năng động và tiện lợi trong sử dụng. Những đường nét góc cạnh không chỉ tôn lên vẻ mạnh mẽ mà còn tạo ra nét cá tính riêng của xe.",
                             MoTaDonVi = "VND",
-                            NgaySX = new DateTime(2024, 4, 12, 16, 28, 1, 107, DateTimeKind.Local).AddTicks(5572),
+                            NgaySX = new DateTime(2024, 4, 16, 16, 45, 3, 326, DateTimeKind.Local).AddTicks(6739),
                             SoLanXem = 99,
                             TenAlias = "wave-rsx",
-                            TenHH = "Wave RSX"
+                            TenHH = "Wave RSX",
+                            ThietKe = "Trẻ trung",
+                            TienIchAnToan = "Gọn Nhẹ"
+                        },
+                        new
+                        {
+                            MaHH = 4,
+                            DonGia = 10000000.0,
+                            DongCoCongNghe = "Mạnh Mẽ",
+                            GiamGia = 0.0,
+                            Hinh = "xe-may-dien-vinfast-klara.jpg",
+                            MaLoai = 3,
+                            MaNCC = "NCC003",
+                            MaTSKT = 4,
+                            MoTa = "Phong cách thiết kế của Wave RSX FI là sự kết hợp hoàn hảo giữa yếu tố thể thao, năng động và tiện lợi trong sử dụng. Những đường nét góc cạnh không chỉ tôn lên vẻ mạnh mẽ mà còn tạo ra nét cá tính riêng của xe.",
+                            MoTaDonVi = "VND",
+                            NgaySX = new DateTime(2024, 4, 16, 16, 45, 3, 326, DateTimeKind.Local).AddTicks(6740),
+                            SoLanXem = 99,
+                            TenAlias = "vinfast-klara",
+                            TenHH = "Xe máy điện VinFast Klara S (2022)",
+                            ThietKe = "Trẻ trung",
+                            TienIchAnToan = "Gọn Nhẹ"
                         });
                 });
 
@@ -399,7 +432,7 @@ namespace MotoBikeShop.Migrations
                         {
                             MaLoai = 1,
                             Hinh = "xecon.png",
-                            MoTa = "Xe này để đua ",
+                            MoTa = "Động Cơ Mạnh Mẽ ",
                             TenLoai = "Xe Côn",
                             TenLoaiAlias = "xe-con"
                         },
@@ -407,7 +440,7 @@ namespace MotoBikeShop.Migrations
                         {
                             MaLoai = 2,
                             Hinh = "xega.png",
-                            MoTa = "Xe này để tán gái",
+                            MoTa = "Sang Trọng ",
                             TenLoai = "Xe ga",
                             TenLoaiAlias = "xe-ga"
                         },
@@ -415,9 +448,17 @@ namespace MotoBikeShop.Migrations
                         {
                             MaLoai = 3,
                             Hinh = "xeso.png",
-                            MoTa = "Xe này để đi làm",
+                            MoTa = "Lịch Lãm Chững chạc",
                             TenLoai = "Xe số",
                             TenLoaiAlias = "xe-so"
+                        },
+                        new
+                        {
+                            MaLoai = 4,
+                            Hinh = "xeso.png",
+                            MoTa = "Êm Ái",
+                            TenLoai = "Xe điện",
+                            TenLoaiAlias = "xe-dien"
                         });
                 });
 
@@ -468,48 +509,45 @@ namespace MotoBikeShop.Migrations
                         new
                         {
                             MaNCC = "NCC001",
-                            DiaChi = "Địa chỉ ABC",
-                            DienThoai = "123456789",
-                            Email = "info@gmail.com",
-                            Logo = "logo1.png",
-                            MoTa = "nhà cung cấp vip1",
-                            NguoiLienLac = "Người liên hệ ABC",
-                            TenCongTy = "Công ty ABC"
+                            DiaChi = "Nhật Bản ",
+                            DienThoai = "0329999999",
+                            Email = "honda@gmail.com",
+                            Logo = "Honda_Logo.png",
+                            MoTa = "Honda là nhà sản xuất xe máy lớn nhất thế giới kể từ năm 1959,[4][5] đạt sản lượng 400 triệu vào cuối năm 2019,[6] cũng như là nhà sản xuất động cơ đốt trong lớn nhất thế giới tính theo khối lượng, sản xuất hơn 14 triệu động cơ đốt trong mỗi năm",
+                            NguoiLienLac = "Huỳnh Đắc Việt",
+                            TenCongTy = "Honda"
                         },
                         new
                         {
                             MaNCC = "NCC002",
-                            DiaChi = "Địa chỉ XYZ",
-                            DienThoai = "987654321",
-                            Email = "info@gmail.com",
-                            Logo = "logo2.png",
-                            MoTa = "nhà cung cấp vip2",
-                            NguoiLienLac = "Người liên hệ XYZ",
-                            TenCongTy = "Công ty XYZ"
+                            DiaChi = "Nhật Bản",
+                            DienThoai = "03298989898",
+                            Email = "yamaha@gmail.com",
+                            Logo = "Logo_Yamaha.png",
+                            MoTa = "Yamaha ban đầu là một công ty chế tạo đàn piano, Torakusu Yamaha là người sáng lập vào năm 1887 tại thành phố Hamamatsu, Shizuoka, Nhật Bản.",
+                            NguoiLienLac = "Phan Nhật Trường",
+                            TenCongTy = "Yamaha"
                         },
                         new
                         {
                             MaNCC = "NCC003",
-                            DiaChi = "Địa chỉ DEF",
-                            DienThoai = "555555555",
-                            Email = "info@gmail.com",
-                            Logo = "logo3.png",
-                            MoTa = "nhà cung cấp vip3",
-                            NguoiLienLac = "Người liên hệ DEF",
-                            TenCongTy = "Công ty DEF"
+                            DiaChi = "Việt Nam",
+                            DienThoai = "03298989898",
+                            Email = "vinfast@gmail.com",
+                            Logo = "vinfast_logo.png",
+                            MoTa = "VinFast (hay VinFast LLC; viết tắt: VF, tên đầy đủ: Công ty cổ phần sản xuất và kinh doanh VinFast) là một nhà sản xuất ô tô và xe máy điện của Việt Nam được thành lập năm 2017 tại Hải Phòng. ",
+                            NguoiLienLac = "Trần Thanh Thuận",
+                            TenCongTy = "Vinfast"
                         });
                 });
 
             modelBuilder.Entity("MotoBikeShop.Data.ThongSoKyThuat", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("MaTSKT")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("MaHangHoaNavigation")
-                        .HasColumnType("int");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MaTSKT"));
 
                     b.Property<string>("congsuattoida")
                         .IsRequired()
@@ -517,8 +555,7 @@ namespace MotoBikeShop.Migrations
 
                     b.Property<string>("dairongcao")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("docaoyen")
                         .IsRequired()
@@ -554,8 +591,7 @@ namespace MotoBikeShop.Migrations
 
                     b.Property<string>("khoiluongbanthan")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("kichthuocloptruocsau")
                         .IsRequired()
@@ -589,11 +625,103 @@ namespace MotoBikeShop.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
-
-                    b.HasIndex("MaHangHoaNavigation");
+                    b.HasKey("MaTSKT");
 
                     b.ToTable("thongSoKyThuats");
+
+                    b.HasData(
+                        new
+                        {
+                            MaTSKT = 1,
+                            congsuattoida = "11,5kW/9.000 vòng/phút",
+                            dairongcao = "2.019 x 727 x 1.104 mm",
+                            docaoyen = "795 mm",
+                            dungtichbinhxang = "4,5 ",
+                            dungtichnhotmay = "1,1 lít khi thay nhớt\r\n1,3 lít khi rã máy",
+                            dungtichxylanh = "149,2 cm3",
+                            duongkinhhanhtrinhpittong = "57,30 mm x 57,84 mm",
+                            hethongkhoidong = "Điện",
+                            khoangcachtrucxe = "1.278 mm",
+                            khoangsanggamxe = "151 mm",
+                            khoiluongbanthan = "122 kg",
+                            kichthuocloptruocsau = "Trước: 90/80-17M/C 46P\r\nSau: 120/70-17M/C 58P",
+                            loaidongco = "PGM-FI, SOHC, 4 kỳ, xy-lanh đơn, côn tay 6 cấp số, làm mát bằng chất lỏng",
+                            loaitruyendong = "Cơ khí",
+                            momentcucdai = "13,5Nm/7.000 vòng/phút",
+                            muctieuthunhienlieu = "1,98 lít/100km",
+                            phuocsau = "Lò xo trụ đơn",
+                            phuoctruoc = "Ống lồng, giảm chấn thủy lực",
+                            tysonen = "11,3:1"
+                        },
+                        new
+                        {
+                            MaTSKT = 2,
+                            congsuattoida = "8,19kW/8500 vòng/phút",
+                            dairongcao = "1918 mm x 679 mm x 1066 mm",
+                            docaoyen = "769 mm",
+                            dungtichbinhxang = "5,5  ",
+                            dungtichnhotmay = "Xả: 0,8 lít\r\nTháo rã: 0,9 lít\r\nThay lọc dầu: 0,8 lít",
+                            dungtichxylanh = "125 cm3",
+                            duongkinhhanhtrinhpittong = "52,400 x 57,907 mm",
+                            hethongkhoidong = "Điện",
+                            khoangcachtrucxe = "1280 mm",
+                            khoangsanggamxe = "131 mm",
+                            khoiluongbanthan = "113 kg",
+                            kichthuocloptruocsau = "\r\nTrước: 90/80 - 14M/C 43P\r\nSau: 100/80 - 14M/C 48P",
+                            loaidongco = "4 kỳ, 1 xi lanh, làm mát bằng chất lỏng",
+                            loaitruyendong = "Vô cấp, điều khiển tự động",
+                            momentcucdai = "10,79Nm/5000 vòng/phút",
+                            muctieuthunhienlieu = "2,16l/100km",
+                            phuocsau = "Lò xo trụ đơn, giảm chấn thủy lực",
+                            phuoctruoc = "Ống lồng, giảm chấn thủy lực",
+                            tysonen = "11,0 : 01"
+                        },
+                        new
+                        {
+                            MaTSKT = 3,
+                            congsuattoida = "6,46 kW / 7.500 vòng/phút",
+                            dairongcao = "1922 mm x 709 mm x 1082 mm (Bản thể thao & đặc biệt)",
+                            docaoyen = "760mm",
+                            dungtichbinhxang = "4,0  ",
+                            dungtichnhotmay = "0,8 lít khi thay nhớt\r\n1,0 lít khi rã máy",
+                            dungtichxylanh = "109,2 cm3",
+                            duongkinhhanhtrinhpittong = "50,0 x 55,6 mm",
+                            hethongkhoidong = "Đạp chân/Điện",
+                            khoangcachtrucxe = "1227 mm",
+                            khoangsanggamxe = "135mm",
+                            khoiluongbanthan = "98 Kg (Bản thể thao)",
+                            kichthuocloptruocsau = "Lốp trước: 70/90 - 17 M/C 38P\r\nLốp sau: 80/90 - 17 M/C 50P",
+                            loaidongco = "Xăng, 4 kỳ, 1 xilanh, làm mát bằng không khí",
+                            loaitruyendong = "Vô cấp, điều khiển tự động",
+                            momentcucdai = "8,70 Nm/6.000 vòng/phút",
+                            muctieuthunhienlieu = "1,56 L/100 km",
+                            phuocsau = "Lò xo trụ, giảm chấn thủy lực",
+                            phuoctruoc = "Ống lồng, giảm chấn thủy lực",
+                            tysonen = "9,3 : 1"
+                        },
+                        new
+                        {
+                            MaTSKT = 4,
+                            congsuattoida = "8,19kW/8500 vòng/phút",
+                            dairongcao = "1895 x 678 x 1130 mm",
+                            docaoyen = "769 mm",
+                            dungtichbinhxang = "5,5  ",
+                            dungtichnhotmay = "Xả: 0,8 lít\r\nTháo rã: 0,9 lít\r\nThay lọc dầu: 0,8 lít",
+                            dungtichxylanh = "125 cm3",
+                            duongkinhhanhtrinhpittong = "52,400 x 57,907 mm",
+                            hethongkhoidong = "Điện",
+                            khoangcachtrucxe = "1280 mm",
+                            khoangsanggamxe = "125mm",
+                            khoiluongbanthan = "100 kg",
+                            kichthuocloptruocsau = "\r\nTrước: 90/80 - 14M/C 43P\r\nSau: 100/80 - 14M/C 48P",
+                            loaidongco = "4 kỳ, 1 xi lanh, làm mát bằng chất lỏng",
+                            loaitruyendong = "Vô cấp, điều khiển tự động",
+                            momentcucdai = "10,79Nm/5000 vòng/phút",
+                            muctieuthunhienlieu = "2,16l/100km",
+                            phuocsau = "Lò xo trụ đơn, giảm chấn thủy lực",
+                            phuoctruoc = "Ống lồng, giảm chấn thủy lực",
+                            tysonen = "11,0 : 01"
+                        });
                 });
 
             modelBuilder.Entity("MotoBikeShop.Data.YeuThich", b =>
@@ -712,6 +840,9 @@ namespace MotoBikeShop.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdEmail"));
+
+                    b.Property<DateTime?>("CreateAtTime")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -908,9 +1039,17 @@ namespace MotoBikeShop.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("MotoBikeShop.Data.ThongSoKyThuat", "MaTSKTNavigation")
+                        .WithMany()
+                        .HasForeignKey("MaTSKT")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("MaLoaiNavigation");
 
                     b.Navigation("MaNccNavigation");
+
+                    b.Navigation("MaTSKTNavigation");
                 });
 
             modelBuilder.Entity("MotoBikeShop.Data.HoaDon", b =>
@@ -922,17 +1061,6 @@ namespace MotoBikeShop.Migrations
                         .IsRequired();
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("MotoBikeShop.Data.ThongSoKyThuat", b =>
-                {
-                    b.HasOne("MotoBikeShop.Data.HangHoa", "HangHoa")
-                        .WithMany()
-                        .HasForeignKey("MaHangHoaNavigation")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("HangHoa");
                 });
 
             modelBuilder.Entity("MotoBikeShop.Data.YeuThich", b =>

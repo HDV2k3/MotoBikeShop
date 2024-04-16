@@ -8,12 +8,11 @@ namespace MotoBikeShop.Data
 	public class ThongSoKyThuat
 	{
 		[Key]
-		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-		public int Id { get; set; }
+		public int MaTSKT { get; set; }
 
-		[MaxLength(50)]
+
 		public string khoiluongbanthan { get; set; }
-		[MaxLength(50)]
+
 		public string dairongcao { get; set; }
 		public string khoangcachtrucxe { get; set; }
 		public string docaoyen { get; set; }
@@ -33,10 +32,5 @@ namespace MotoBikeShop.Data
 		public string duongkinhhanhtrinhpittong { get; set; }
 
 		public string tysonen { get; set; }
-
-		[ForeignKey("HangHoa")]
-		public int MaHangHoaNavigation { get; set; }
-
-		public virtual HangHoa HangHoa { get; set; }
-	}
+    }
 }

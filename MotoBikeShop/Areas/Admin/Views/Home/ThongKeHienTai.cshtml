@@ -3,7 +3,9 @@
     ViewData["Title"] = "ThongKeHienTai";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
-
+@using Microsoft.AspNetCore.Mvc.RazorPages
+@namespace MotoBikeShop.Areas.Admin.Pages
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
 @model IEnumerable<MotoBikeShop.Areas.Admin.Models.OrderDetail>
 <!DOCTYPE html>
