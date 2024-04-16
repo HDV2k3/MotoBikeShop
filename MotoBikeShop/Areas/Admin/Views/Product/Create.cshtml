@@ -6,7 +6,7 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
+@* <h1>Create</h1>
 
 <h4>HangHoa</h4>
 <hr />
@@ -79,4 +79,122 @@
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
+ *@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>SB Admin 2 - Animation Utilities</title>
+
+    <!-- Custom fonts for this template-->
+    <link href="/vendor_admin/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+          rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="/css_admin/sb-admin-2.min.css" rel="stylesheet">
+    <link href="/css_admin/css-product.css" rel="stylesheet" />
+
+</head>
+<body id="page-top">
+    <!-- Topbar -->
+    <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+        <!-- Sidebar Toggle (Topbar) -->
+        <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+            <i class="fa fa-bars"></i>
+        </button>
+        <h1>Thêm Xe</h1>     
+    </nav>
+    <hr />
+    <div id="wrapper">
+        <!-- Begin Page Content -->
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-4">
+                    <form asp-action="Create">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="form-group">
+                            <label asp-for="TenHH" class="control-label">Tên hàng hóa</label>
+                            <input asp-for="TenHH" class="form-control" />
+                            <span asp-validation-for="TenHH" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="TenAlias" class="control-label">Tên Alias</label>
+                            <input asp-for="TenAlias" class="form-control" />
+                            <span asp-validation-for="TenAlias" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="MaLoai" class="control-label">Mã loại</label>
+                            <select asp-for="MaLoai" class="form-control" asp-items="ViewBag.Loais"></select>
+                            <span asp-validation-for="MaLoai" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="MoTaDonVi" class="control-label">Mô tả đơn vị</label>
+                            <input asp-for="MoTaDonVi" class="form-control" />
+                            <span asp-validation-for="MoTaDonVi" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="DonGia" class="control-label">Đơn giá</label>
+                            <input asp-for="DonGia" class="form-control" />
+                            <span asp-validation-for="DonGia" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Hinh" class="control-label">Hình</label>
+                            <input type="file" asp-for="Hinh" class="form-control" />
+                            <span asp-validation-for="Hinh" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="NgaySX" class="control-label">Ngày sản xuất</label>
+                            <input asp-for="NgaySX" class="form-control" />
+                            <span asp-validation-for="NgaySX" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="GiamGia" class="control-label">Giảm giá</label>
+                            <input asp-for="GiamGia" class="form-control" />
+                            <span asp-validation-for="GiamGia" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="SoLanXem" class="control-label">Số lần xem</label>
+                            <input asp-for="SoLanXem" class="form-control" />
+                            <span asp-validation-for="SoLanXem" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="MoTa" class="control-label">Mô tả</label>
+                            <input asp-for="MoTa" class="form-control" />
+                            <span asp-validation-for="MoTa" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="MaNCC" class="control-label">Mã nhà cung cấp</label>
+                            <select asp-for="MaNCC" class="form-control" asp-items="ViewBag.NhaCungCaps"></select>
+                            <span asp-validation-for="MaNCC" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Create" class="btn btn-primary my-3" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <a href="/admin/product/index">Quay Lại</a>   
+    </div>
+    <!-- Bootstrap core JavaScript-->
+    <script src="/vendor_admin/jquery/jquery.min.js"></script>
+    <script src="/vendor_admin/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="/vendor_admin/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="/js_admin/sb-admin-2.min.js"></script>
+</body>
+</html>
