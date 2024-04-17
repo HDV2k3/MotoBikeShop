@@ -46,7 +46,6 @@ namespace MotoBikeShop.ViewModels
 		public string? ThietKe { get; set; }
 		public string? DongCoCongNghe { get; set; }
 		public string? TienIchAnToan { get; set; }
-
 		public string? tysonen { get; set; }
 	}
 

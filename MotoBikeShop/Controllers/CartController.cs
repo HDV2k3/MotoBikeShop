@@ -62,6 +62,7 @@ namespace MotoBikeShop.Controllers
                 item.SoLuong += quantity;
             }
 
+
             HttpContext.Session.Set(MySetting.CART_KEY, gioHang);
 
 
@@ -97,7 +98,6 @@ namespace MotoBikeShop.Controllers
         {
             if (ModelState.IsValid)
             {
-
                 if (model.CachThanhToan == "Đến Cửa Hàng")
                 {
                     if (ModelState.IsValid)
@@ -145,11 +145,9 @@ namespace MotoBikeShop.Controllers
                             }
                             db.AddRange(cthds);
                             db.SaveChanges();
-
                             db.Database.CommitTransaction();
 
                             HttpContext.Session.Set<List<CartItem>>(MySetting.CART_KEY, new List<CartItem>());
-
                             return View("Success");
                         }
                         catch

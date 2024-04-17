@@ -43,5 +43,16 @@ namespace MotoBikeShop.Repository
                .Where(t => t.TenHH.Contains(keyword) || t.MoTa.Contains(keyword))
                .ToListAsync();
         }
+        public  List<HangHoa> GetProductsSorted(bool ascending)
+        {
+            if (ascending)
+            {
+                return _context.HangHoas.OrderBy(p => p.TenHH).ToList();
+            }
+            else
+            {
+                return _context.HangHoas.OrderByDescending(p => p.TenHH).ToList();
+            }
+        }
     }
 }

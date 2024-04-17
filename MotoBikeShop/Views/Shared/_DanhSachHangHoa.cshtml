@@ -17,7 +17,7 @@
                         <div class="col-xl-3">
                             <div class="bg-light ps-3 py-3 rounded d-flex justify-content-between mb-4">
                                 <label for="moto">Sắp Xếp:</label>
-                                <select id="moto" name="moto" class="border-0 form-select-sm bg-light me-3" form="motoform">
+                                <select id="selectOption" onchange="redirectOnChange(this)" class="border-0 form-select-sm bg-light me-3" form="motoform">
                                     <option value="all">Tất Cả</option>
                                     <option value="tangdan">Giá Tăng Dần</option>
                                     <option value="giamdan">Giá Giảm Dần</option>
@@ -46,62 +46,18 @@
     </div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-        $(document).ready(function () {
-            $("#moto").change(function () {
-                var selectedOption = $(this).val();
-
-                // Gửi yêu cầu HTTP tới các phương thức tương ứng trong HangHoa
-                if (selectedOption === "all") {
-                    queryAll();
-                } else if (selectedOption === "tangdan") {
-                    queryAscending();
-                } else if (selectedOption === "giamdan") {
-                    queryDescending();
-                }
-            });
-
-            function queryAll() {
-                $.ajax({
-                    url: "/HangHoa/Index",
-                    type: "GET",
-                    success: function (data) {
-                        // Xử lý dữ liệu trả về từ truy vấn
-                        console.log(data);
-                    },
-                    error: function (error) {
-                        console.error(error);
-                    }
-                });
+        function redirectOnChange(selectEl) {
+            var selectedValue = selectEl.value;
+            if (selectedValue === "all") {
+                // Chuyển hướng đến trang tất cả
+                window.location.href = "/HangHoa";
+            } else if (selectedValue === "tangdan") {
+                // Chuyển hướng đến trang giá tăng dần
+                window.location.href = "/HangHoa/TangDan";
+            } else if (selectedValue === "giamdan") {
+                // Chuyển hướng đến trang giá giảm dần
+                window.location.href = "/HangHoa/GiamDan";
             }
-
-            function queryAscending() {
-                $.ajax({
-                    url: "/HangHoa/QueryAscending",
-                    type: "GET",
-                    success: function (data) {
-                        // Xử lý dữ liệu trả về từ truy vấn
-                        console.log(data);
-                    },
-                    error: function (error) {
-                        console.error(error);
-                    }
-                });
-            }
-
-            function queryDescending() {
-                $.ajax({
-                    url: "/HangHoa/QueryDescending",
-                    type: "GET",
-                    success: function (data) {
-                        // Xử lý dữ liệu trả về từ truy vấn
-                        console.log(data);
-                    },
-                    error: function (error) {
-                        console.error(error);
-                    }
-                });
-            }
-        });
-     
+        }
     </script>
 </body>

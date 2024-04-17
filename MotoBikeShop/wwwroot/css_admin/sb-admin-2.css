@@ -10861,19 +10861,19 @@ a:focus {
 }
 
 .bg-login-image {
-    background: url("https://upload.wikimedia.org/wikipedia/fr/thumb/1/1d/Lamborghini-Logo.svg/672px-Lamborghini-Logo.svg.png");
+    background: url("/images/672px-Lamborghini-Logo.svg.png");
     background-position: center;
     background-size: cover;
 }
 
 .bg-register-image {
-    background: url("https://upload.wikimedia.org/wikipedia/fr/thumb/1/1d/Lamborghini-Logo.svg/672px-Lamborghini-Logo.svg.png");
+    background: url("/images/672px-Lamborghini-Logo.svg.png");
     background-position: center;
     background-size: cover;
 }
 
 .bg-password-image {
-    background: url("https://upload.wikimedia.org/wikipedia/fr/thumb/1/1d/Lamborghini-Logo.svg/672px-Lamborghini-Logo.svg.png");
+    background: url("/images/672px-Lamborghini-Logo.svg.png");
     background-position: center;
     background-size: cover;
 }

@@ -13,15 +13,16 @@ namespace MotoBikeShop.Controllers
 {
     public class HangHoaController : Controller
     {
+        private readonly IProductRepository _productRepository;
 
         private readonly motoBikeVHDbContext db;
 
         private readonly HttpClient _httpClient;
-        public HangHoaController(motoBikeVHDbContext context)
+        public HangHoaController(motoBikeVHDbContext context, IProductRepository productRepository)
         {
             db = context;
             _httpClient = new HttpClient();
-
+            _productRepository = productRepository;
         }
         public IActionResult Index(int? loai, int? page, string? ncc)
         {
@@ -34,7 +35,7 @@ namespace MotoBikeShop.Controllers
             {
                 hanghoas = hanghoas.Where(p => p.MaNCC == ncc);
             }
-            int pageSize = 6; // Số lượng sản phẩm trên mỗi trang
+            int pageSize = 8; // Số lượng sản phẩm trên mỗi trang
             int pageNumber = page ?? 1; // Trang hiện tại
 
             var pagedHanghoas = hanghoas.Select(p => new HangHoaVM
@@ -88,7 +89,6 @@ namespace MotoBikeShop.Controllers
                 TempData["Message"] = $"Không thấy sản phẩm có mã {id}";
                 return Redirect("/404");
             }
-
             var result = new CTHangHoaVM
             {
 
@@ -127,6 +127,78 @@ namespace MotoBikeShop.Controllers
 
             };
             return View(result);
+        }
+
+        public IActionResult TangDan(int? loai, int? page, string? ncc)
+        {
+            var hanghoas = db.HangHoas.AsQueryable();
+            if (loai.HasValue)
+            {
+                hanghoas = hanghoas.Where(p => p.MaLoai == loai.Value);
+            }
+            if (!string.IsNullOrEmpty(ncc))
+            {
+                hanghoas = hanghoas.Where(p => p.MaNCC == ncc);
+            }
+            int pageSize = 6; // Số lượng sản phẩm trên mỗi trang
+            int pageNumber = page ?? 1; // Trang hiện tại
+
+            var pagedHanghoas = hanghoas.OrderBy(p => p.DonGia ?? 0).Select(p => new HangHoaVM
+            {
+                MaHh = p.MaHH,
+                TenHh = p.TenHH,
+                DonGia = p.DonGia ?? 0,
+                Hinh = p.Hinh ?? "",
+                MoTaNgan = p.MoTaDonVi ?? "",
+                TenLoai = p.MaLoaiNavigation.TenLoai
+            })
+            .Skip((pageNumber - 1) * pageSize)
+            .Take(pageSize)
+            .ToList();
+
+            int totalItems = hanghoas.Count();
+            int totalPages = (int)Math.Ceiling(totalItems / (double)pageSize);
+
+            ViewBag.CurrentPage = pageNumber;
+            ViewBag.TotalPages = totalPages;
+
+            return View(pagedHanghoas);
+        }
+
+        public IActionResult GiamDan(int? loai, int? page, string? ncc)
+        {
+            var hanghoas = db.HangHoas.AsQueryable();
+            if (loai.HasValue)
+            {
+                hanghoas = hanghoas.Where(p => p.MaLoai == loai.Value);
+            }
+            if (!string.IsNullOrEmpty(ncc))
+            {
+                hanghoas = hanghoas.Where(p => p.MaNCC == ncc);
+            }
+            int pageSize = 6; // Số lượng sản phẩm trên mỗi trang
+            int pageNumber = page ?? 1; // Trang hiện tại
+
+            var pagedHanghoas = hanghoas.OrderByDescending(p => p.DonGia ?? 0).Select(p => new HangHoaVM
+            {
+                MaHh = p.MaHH,
+                TenHh = p.TenHH,
+                DonGia = p.DonGia ?? 0,
+                Hinh = p.Hinh ?? "",
+                MoTaNgan = p.MoTaDonVi ?? "",
+                TenLoai = p.MaLoaiNavigation.TenLoai
+            })
+            .Skip((pageNumber - 1) * pageSize)
+            .Take(pageSize)
+            .ToList();
+
+            int totalItems = hanghoas.Count();
+            int totalPages = (int)Math.Ceiling(totalItems / (double)pageSize);
+
+            ViewBag.CurrentPage = pageNumber;
+            ViewBag.TotalPages = totalPages;
+
+            return View(pagedHanghoas);
         }
 
     }

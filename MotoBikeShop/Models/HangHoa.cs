@@ -9,10 +9,8 @@ namespace MotoBikeShop.Data
     {
         [Key]
         public int MaHH { get; set; }
-
         [Required]
         public string TenHH { get; set; }
-
         [MaxLength(50)]
         public string TenAlias { get; set; }
 
@@ -37,9 +35,9 @@ namespace MotoBikeShop.Data
         public string? TienIchAnToan { get; set; }
 
         [Required]
- 
+
         public string MaNCC { get; set; }
-        public int MaTSKT {  get; set; }
+        public int MaTSKT { get; set; }
 
         public virtual ICollection<ChiTietHd> ChiTietHds { get; set; } = new List<ChiTietHd>();
 

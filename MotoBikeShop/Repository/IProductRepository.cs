@@ -1,6 +1,7 @@
 ﻿using MotoBikeShop.Models;
 using MotoBikeShop.ViewModels;
 using MotoBikeShop.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace MotoBikeShop.Repository
 {
@@ -12,5 +13,7 @@ namespace MotoBikeShop.Repository
         Task UpdateAsync(HangHoa product);
         Task DeleteAsync(int id);
         Task<IEnumerable<HangHoa>> SearchAsync(string keyword);
+        List<HangHoa> GetProductsSorted(bool ascending);
     }
 }
+

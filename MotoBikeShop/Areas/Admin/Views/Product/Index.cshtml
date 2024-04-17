@@ -3,7 +3,7 @@
 @namespace MotoBikeShop.Areas.Admin.Pages
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Sản Phẩm Của Cửa Hàng";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 <!DOCTYPE html>
@@ -17,7 +17,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Animation Utilities</title>
+    <title>Sản Phẩm Của Cửa Hàng</title>
 
     <!-- Custom fonts for this template-->
     <link href="/vendor_admin/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -60,11 +60,12 @@
         <div class="container-fluid">
 
             <!-- Page Heading -->
-            <h1 class="h3 mb-1 text-gray-800">Tất Cả Xe</h1>
-            <a asp-action="Create" asp-controller="Product" >+ Create</a>
-
+            <h1 class="h3 mb-1 text-gray-800">ALL PRODUCTS</h1>
+            
+            <a asp-action="Create"  class="btn btn-danger">+ Create New</a>
+            <br />
             <!-- Content Row -->
-            <div class="row">
+            <div class="row mt-3">
                 @foreach (var product in Model)
                 {
                     <div class="col-lg-4 col-md-6">
@@ -74,7 +75,6 @@
                                 <h5 class="card-title product-title">@product.TenHh</h5>
                             </div>
                             <div class="card-footer product-actions">
-                                <a asp-action="Create" asp-route-id="@product.MaHh" class="btn btn-danger">Create</a>
                                 <a asp-action="Details" asp-route-id="@product.MaHh" class="btn btn-info">View</a>
                                 <a asp-action="Edit" asp-route-id="@product.MaHh" class="btn btn-warning">Edit</a>
                                 <a asp-action="Delete" asp-route-id="@product.MaHh" class="btn btn-danger">Delete</a>

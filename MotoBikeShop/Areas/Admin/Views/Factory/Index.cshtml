@@ -62,10 +62,11 @@
         <div class="container-fluid">
 
             <!-- Page Heading -->
-            <h1 class="h3 mb-1 text-gray-800">Tất Cả Nhà Cung Cấp</h1>
+            <h1 class="h3 mb-1 text-gray-800">ALL FACTORIES</h1>
 
+            <a asp-action="Create" class="btn btn-danger">+ Create New</a>
             <!-- Content Row -->
-            <div class="row">
+            <div class="row mt-3">
                 @foreach (var factory in Model)
                 {
                     <div class="col-lg-4 col-md-6">
