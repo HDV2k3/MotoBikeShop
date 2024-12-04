@@ -16,23 +16,23 @@
         {
             var fullName = user.FullName;
             <li class="nav-item">
-                <button id="manage" class="text-decoration-none navbar-text"  asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Profile @fullName!</button>
+                <button id="manage" class="text-decoration-none navbar-text"  asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage"> @fullName!</button>
             </li>
             if (User.IsInRole("Admin"))
             {
-                <script>
+               @*  <script>
                     window.location.href = '/admin';
-                </script>
+                </script> *@
                 <li class="nav-item">
                     <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "admin" })">
-                        <button id="logout" type="submit" class="bg-light" >Logout</button>
+                        <button id="logout" type="submit" class="bg-light" >Đăng Xuất</button>
                     </form>
                 </li>
             }
             else
             {
                 <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home")">
-                    <button id="logout" type="submit">Logout</button>
+                    <button id="logout" type="submit">Đăng Xuất</button>
                 </form>
             }
 
@@ -43,10 +43,10 @@
     else
     {
         <li class="nav-item">
-            <a  id="register" asp-area="Identity" asp-page="/Account/Register">Register</a>
+            <a  id="register" asp-area="Identity" asp-page="/Account/Register">Đăng Ký</a>
         </li>
         <li class="nav-item">
-            <a  id="login" asp-area="Identity" asp-page="/Account/Login">Login</a>
+            <a  id="login" asp-area="Identity" asp-page="/Account/Login">Đăng Nhập</a>
         </li>
     }
 </ul>

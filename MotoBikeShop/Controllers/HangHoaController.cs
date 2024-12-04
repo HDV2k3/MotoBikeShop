@@ -64,7 +64,7 @@ namespace MotoBikeShop.Controllers
             var hanghoas = db.HangHoas.AsQueryable();
             if (query != null)
             {
-                hanghoas = hanghoas.Where(p => p.TenHH.Contains(query));
+            hanghoas = hanghoas.Where(p => p.TenHH.Contains(query));
 
             }
             var result = hanghoas.Select(p => new HangHoaVM

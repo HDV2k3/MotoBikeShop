@@ -159,6 +159,7 @@ namespace MotoBikeShop.Controllers
 
                     return View(Cart);
                 }
+
                 else if (model.CachThanhToan == "Thanh Toán Momo")
                 {
                     //request params need to request to MoMo system
@@ -173,7 +174,6 @@ namespace MotoBikeShop.Controllers
                     string orderid = DateTime.Now.Ticks.ToString(); //mã đơn hàng
                     string requestId = DateTime.Now.Ticks.ToString();
                     string extraData = "";
-
                     //Before sign HMAC SHA256 signature
                     string rawHash = "partnerCode=" +
                         partnerCode + "&accessKey=" +

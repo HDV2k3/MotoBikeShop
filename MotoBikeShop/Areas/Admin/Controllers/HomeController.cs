@@ -1,14 +1,12 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
-using Microsoft.EntityFrameworkCore;
 using MotoBikeShop.Areas.Admin.Models;
 using MotoBikeShop.Data;
 using MotoBikeShop.Models;
 using System.Data;
-using static System.Runtime.InteropServices.JavaScript.JSType;
-using System.Configuration;
-using System.Text.Json;
+
+
 
 namespace MotoBikeShop.Areas.Admin.Controllers
 {

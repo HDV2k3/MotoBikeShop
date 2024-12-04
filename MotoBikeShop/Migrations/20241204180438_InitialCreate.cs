@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace MotoBikeShop.Migrations
 {
     /// <inheritdoc />
-    public partial class seedata : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -451,10 +451,10 @@ namespace MotoBikeShop.Migrations
                 columns: new[] { "MaHH", "DonGia", "DongCoCongNghe", "GiamGia", "Hinh", "MaLoai", "MaNCC", "MaTSKT", "MoTa", "MoTaDonVi", "NgaySX", "SoLanXem", "TenAlias", "TenHH", "ThietKe", "TienIchAnToan" },
                 values: new object[,]
                 {
-                    { 1, 40000000.0, "Mạnh Mẽ", 0.0, "xecon.png", 1, "NCC002", 1, "Yamaha Exciter 2024 là mẫu xe côn tay được ưa chuộng nhất tại thị trường Việt Nam với thiết kế mang đậm dấu ấn đặc trưng DNA của Yamaha. Bên cạnh phiên bản Exciter 150 rất được yêu thích từ trước đó, Yamaha Motor Việt Nam vừa ra mắt phiên bản Exciter 155 VVA mới nhất được phát triển như một chiếc \"Tiểu YZF-R1\".", "VND", new DateTime(2024, 4, 16, 16, 45, 3, 326, DateTimeKind.Local).AddTicks(6717), 99, "exciter", "Exciter", "Trẻ trung", "Gọn Nhẹ" },
-                    { 2, 30000000.0, "Mạnh Mẽ", 0.0, "xega.png", 2, "NCC001", 2, "Vario 125 sở hữu thiết kế thể thao vô cùng trẻ trung ấn tượng, khác biệt hẳn so với những mẫu xe tay ga phổ thông truyền thống, mang đậm dấu ấn cá nhân sành điệu, luôn khao khát thể hiện cái tôi & khẳng định một cách mạnh mẽ cá tính riêng biệt của chủ sở hữu.", "VND", new DateTime(2024, 4, 16, 16, 45, 3, 326, DateTimeKind.Local).AddTicks(6737), 99, "vario", "Vario", "Trẻ trung", "Gọn Nhẹ" },
-                    { 3, 10000000.0, "Mạnh Mẽ", 0.0, "xeso.png", 3, "NCC001", 3, "Phong cách thiết kế của Wave RSX FI là sự kết hợp hoàn hảo giữa yếu tố thể thao, năng động và tiện lợi trong sử dụng. Những đường nét góc cạnh không chỉ tôn lên vẻ mạnh mẽ mà còn tạo ra nét cá tính riêng của xe.", "VND", new DateTime(2024, 4, 16, 16, 45, 3, 326, DateTimeKind.Local).AddTicks(6739), 99, "wave-rsx", "Wave RSX", "Trẻ trung", "Gọn Nhẹ" },
-                    { 4, 10000000.0, "Mạnh Mẽ", 0.0, "xe-may-dien-vinfast-klara.jpg", 3, "NCC003", 4, "Phong cách thiết kế của Wave RSX FI là sự kết hợp hoàn hảo giữa yếu tố thể thao, năng động và tiện lợi trong sử dụng. Những đường nét góc cạnh không chỉ tôn lên vẻ mạnh mẽ mà còn tạo ra nét cá tính riêng của xe.", "VND", new DateTime(2024, 4, 16, 16, 45, 3, 326, DateTimeKind.Local).AddTicks(6740), 99, "vinfast-klara", "Xe máy điện VinFast Klara S (2022)", "Trẻ trung", "Gọn Nhẹ" }
+                    { 1, 40000000.0, "Mạnh Mẽ", 0.0, "ex.png", 1, "NCC002", 1, "Yamaha Exciter 2024 là mẫu xe côn tay được ưa chuộng nhất tại thị trường Việt Nam với thiết kế mang đậm dấu ấn đặc trưng DNA của Yamaha. Bên cạnh phiên bản Exciter 150 rất được yêu thích từ trước đó, Yamaha Motor Việt Nam vừa ra mắt phiên bản Exciter 155 VVA mới nhất được phát triển như một chiếc \"Tiểu YZF-R1\".", "VND", new DateTime(2024, 12, 5, 1, 4, 36, 166, DateTimeKind.Local).AddTicks(6415), 99, "exciter", "Exciter", "Trẻ trung", "Gọn Nhẹ" },
+                    { 2, 30000000.0, "Mạnh Mẽ", 0.0, "varioo.png", 2, "NCC001", 2, "Vario 125 sở hữu thiết kế thể thao vô cùng trẻ trung ấn tượng, khác biệt hẳn so với những mẫu xe tay ga phổ thông truyền thống, mang đậm dấu ấn cá nhân sành điệu, luôn khao khát thể hiện cái tôi & khẳng định một cách mạnh mẽ cá tính riêng biệt của chủ sở hữu.", "VND", new DateTime(2024, 12, 5, 1, 4, 36, 166, DateTimeKind.Local).AddTicks(6433), 99, "vario", "Vario", "Trẻ trung", "Gọn Nhẹ" },
+                    { 3, 10000000.0, "Mạnh Mẽ", 0.0, "waver.png", 3, "NCC001", 3, "Phong cách thiết kế của Wave RSX FI là sự kết hợp hoàn hảo giữa yếu tố thể thao, năng động và tiện lợi trong sử dụng. Những đường nét góc cạnh không chỉ tôn lên vẻ mạnh mẽ mà còn tạo ra nét cá tính riêng của xe.", "VND", new DateTime(2024, 12, 5, 1, 4, 36, 166, DateTimeKind.Local).AddTicks(6435), 99, "wave-rsx", "Wave RSX", "Trẻ trung", "Gọn Nhẹ" },
+                    { 4, 10000000.0, "Mạnh Mẽ", 0.0, "xe-may-dien-vinfast-klara.jpg", 4, "NCC003", 4, "Phong cách thiết kế của Wave RSX FI là sự kết hợp hoàn hảo giữa yếu tố thể thao, năng động và tiện lợi trong sử dụng. Những đường nét góc cạnh không chỉ tôn lên vẻ mạnh mẽ mà còn tạo ra nét cá tính riêng của xe.", "VND", new DateTime(2024, 12, 5, 1, 4, 36, 166, DateTimeKind.Local).AddTicks(6437), 99, "vinfast-klara", "Xe máy điện VinFast Klara S ", "Trẻ trung", "Gọn Nhẹ" }
                 });
 
             migrationBuilder.CreateIndex(
