@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MotoBikeShop.Data;
 
@@ -11,9 +12,11 @@ using MotoBikeShop.Data;
 namespace MotoBikeShop.Migrations
 {
     [DbContext(typeof(motoBikeVHDbContext))]
-    partial class motoBikeVHDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250326172439_HAHAH")]
+    partial class HAHAH
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -247,6 +250,9 @@ namespace MotoBikeShop.Migrations
                     b.Property<string>("TienIchAnToan")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("test")
+                        .HasColumnType("int");
+
                     b.HasKey("MaHH");
 
                     b.HasIndex("MaLoai");
@@ -270,12 +276,13 @@ namespace MotoBikeShop.Migrations
                             MaTSKT = 1,
                             MoTa = "Yamaha Exciter 2024 là mẫu xe côn tay được ưa chuộng nhất tại thị trường Việt Nam với thiết kế mang đậm dấu ấn đặc trưng DNA của Yamaha. Bên cạnh phiên bản Exciter 150 rất được yêu thích từ trước đó, Yamaha Motor Việt Nam vừa ra mắt phiên bản Exciter 155 VVA mới nhất được phát triển như một chiếc \"Tiểu YZF-R1\".",
                             MoTaDonVi = "VND",
-                            NgaySX = new DateTime(2025, 3, 30, 15, 14, 27, 380, DateTimeKind.Local).AddTicks(6523),
+                            NgaySX = new DateTime(2025, 3, 27, 0, 24, 37, 49, DateTimeKind.Local).AddTicks(2487),
                             SoLanXem = 99,
                             TenAlias = "exciter",
                             TenHH = "Exciter",
                             ThietKe = "Trẻ trung",
-                            TienIchAnToan = "Gọn Nhẹ"
+                            TienIchAnToan = "Gọn Nhẹ",
+                            test = 0
                         },
                         new
                         {
@@ -289,12 +296,13 @@ namespace MotoBikeShop.Migrations
                             MaTSKT = 2,
                             MoTa = "Vario 125 sở hữu thiết kế thể thao vô cùng trẻ trung ấn tượng, khác biệt hẳn so với những mẫu xe tay ga phổ thông truyền thống, mang đậm dấu ấn cá nhân sành điệu, luôn khao khát thể hiện cái tôi & khẳng định một cách mạnh mẽ cá tính riêng biệt của chủ sở hữu.",
                             MoTaDonVi = "VND",
-                            NgaySX = new DateTime(2025, 3, 30, 15, 14, 27, 380, DateTimeKind.Local).AddTicks(6540),
+                            NgaySX = new DateTime(2025, 3, 27, 0, 24, 37, 49, DateTimeKind.Local).AddTicks(2553),
                             SoLanXem = 99,
                             TenAlias = "vario",
                             TenHH = "Vario",
                             ThietKe = "Trẻ trung",
-                            TienIchAnToan = "Gọn Nhẹ"
+                            TienIchAnToan = "Gọn Nhẹ",
+                            test = 0
                         },
                         new
                         {
@@ -308,12 +316,13 @@ namespace MotoBikeShop.Migrations
                             MaTSKT = 3,
                             MoTa = "Phong cách thiết kế của Wave RSX FI là sự kết hợp hoàn hảo giữa yếu tố thể thao, năng động và tiện lợi trong sử dụng. Những đường nét góc cạnh không chỉ tôn lên vẻ mạnh mẽ mà còn tạo ra nét cá tính riêng của xe.",
                             MoTaDonVi = "VND",
-                            NgaySX = new DateTime(2025, 3, 30, 15, 14, 27, 380, DateTimeKind.Local).AddTicks(6542),
+                            NgaySX = new DateTime(2025, 3, 27, 0, 24, 37, 49, DateTimeKind.Local).AddTicks(2555),
                             SoLanXem = 99,
                             TenAlias = "wave-rsx",
                             TenHH = "Wave RSX",
                             ThietKe = "Trẻ trung",
-                            TienIchAnToan = "Gọn Nhẹ"
+                            TienIchAnToan = "Gọn Nhẹ",
+                            test = 0
                         },
                         new
                         {
@@ -327,12 +336,13 @@ namespace MotoBikeShop.Migrations
                             MaTSKT = 4,
                             MoTa = "Phong cách thiết kế của Wave RSX FI là sự kết hợp hoàn hảo giữa yếu tố thể thao, năng động và tiện lợi trong sử dụng. Những đường nét góc cạnh không chỉ tôn lên vẻ mạnh mẽ mà còn tạo ra nét cá tính riêng của xe.",
                             MoTaDonVi = "VND",
-                            NgaySX = new DateTime(2025, 3, 30, 15, 14, 27, 380, DateTimeKind.Local).AddTicks(6544),
+                            NgaySX = new DateTime(2025, 3, 27, 0, 24, 37, 49, DateTimeKind.Local).AddTicks(2557),
                             SoLanXem = 99,
                             TenAlias = "vinfast-klara",
                             TenHH = "Xe máy điện VinFast Klara S ",
                             ThietKe = "Trẻ trung",
-                            TienIchAnToan = "Gọn Nhẹ"
+                            TienIchAnToan = "Gọn Nhẹ",
+                            test = 0
                         });
                 });
 
@@ -469,7 +479,8 @@ namespace MotoBikeShop.Migrations
 
                     b.Property<string>("DiaChi")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("DienThoai")
                         .IsRequired()
@@ -483,7 +494,8 @@ namespace MotoBikeShop.Migrations
 
                     b.Property<string>("Logo")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("MoTa")
                         .IsRequired()

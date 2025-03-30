@@ -1,114 +1,143 @@
 ﻿@model IEnumerable<MotoBikeShop.ViewModels.CartItem>
 @{
-	ViewData["Title"] = "Checkout";
+    ViewData["Title"] = "Checkout";
 }
 
 <!-- Single Page Header start -->
 <div class="container-fluid page-header py-5">
-	<h1 class="text-center text-white display-6">Checkout</h1>
-	<ol class="breadcrumb justify-content-center mb-0">
-		<li class="breadcrumb-item"><a href="#">Home</a></li>
-		<li class="breadcrumb-item"><a href="#">Pages</a></li>
-		<li class="breadcrumb-item active text-white">Checkout</li>
-	</ol>
+    <h1 class="text-center text-white display-6">Checkout</h1>
+    <ol class="breadcrumb justify-content-center mb-0">
+        <li class="breadcrumb-item"><a href="#">Home</a></li>
+        <li class="breadcrumb-item"><a href="#">Pages</a></li>
+        <li class="breadcrumb-item active text-white">Checkout</li>
+    </ol>
 </div>
 <!-- Single Page Header End -->
 <!-- Checkout Page Start -->
 <div class="container-fluid py-5">
-	<div class="container py-5">
-		<h1 class="mb-4">Thanh Toán</h1>
-		<form asp-action="Checkout">
-			<div class="row g-5">
-				<form asp-action="Checkout" asp-controller="Cart">
-					<div class="col-md-12 col-lg-6 col-xl-7">
-						<div class="form-item delivery-info">
-							<label class="form-label my-3">Người nhận hàng<sup>*</sup></label>
-							<input type="text" name="HoTen" class="form-control">
-
-						</div>
-						<div class="form-item delivery-info">
-							<label class="form-label my-3">Địa chỉ nhận hàng<sup>*</sup></label>
-							<input type="text" name="DiaChi" class="form-control" placeholder="Hutech Campus Thủ Đức">
-						</div>
-						<div class="form-item delivery-info">
-							<label class="form-label my-3">Số Điện thoại<sup>*</sup></label>
-							<input type="number" name="DienThoai" class="form-control">
-						</div>
-						<div class="form-item mt-3">
-							<textarea name="GhiChu" class="form-control" spellcheck="false" cols="30" rows="11" placeholder="Ghi chú"></textarea>
-						</div>
-						<input type="submit" name="CachThanhToan" class="btn border-danger text-uppercase text-danger w-100 mt-2" value="Đến Cửa Hàng">
-						<input type="submit" name="CachThanhToan" class="btn border-danger text-uppercase text-danger w-100 mt-2" value="Thanh Toán Momo">
-					</div>
-				</form>
-				<div class="col-md-12 col-lg-6 col-xl-5">
-					<div class="table-responsive">
-						<table class="table">
-							<thead>
-								<tr>
-									<th scope="col">Hình</th>
-									<th scope="col">Tên Sản Phẩm</th>
-									<th scope="col">Giá</th>
-									<th scope="col">Số Lượng</th>
-									<th scope="col">Tổng Tiền</th>
-								</tr>
-							</thead>
-							<tbody>
-								@foreach (var item in Model)
-								{
-									<tr>
-										<th scope="row">
-											<div class="d-flex align-items-center mt-2">
-												<img src="~/images/@item.Hinh" class="img-fluid rounded-circle" style="width: 90px; height: 90px;" alt="@item.TenHH">
-											</div>
-										</th>
-										<td class="py-5">@item.TenHH</td>
-										<td class="py-5">@item.DonGia.ToString("#,##0.00")VND</td>
-										<td class="py-5">@item.SoLuong Xe</td>
-										<td class="py-5">@item.ThanhTien.ToString("#,##0.00")VND</td>
-									</tr>
-								}
-								<tr>
-									<th scope="row">
-									</th>
-									<td class="py-5"></td>
-									<td class="py-5"></td>
-								
-									<td class="py-5">
-										<div class="py-3 border-bottom border-top">
-										<input type="hidden" name="TongTien" value="@Model.Sum(p => p.ThanhTien).ToString("#,##0.00")VND">
-										</div>
-									</td>
-								</tr>
-								
-								<tr>
-									<th scope="row">
-									</th>
-									<td class="py-5">
-										<p class="mb-0 text-dark text-uppercase py-3">Tổng Tiền</p>
-									</td>
-									<td class="py-5"></td>
-									<td class="py-5"></td>
-									<td class="py-5">
-										<div class="py-3 border-bottom border-top">
-											<p class="mb-0 text-dark">@Model.Sum(p => p.ThanhTien).ToString("#,##0.00")VND</p>
-										</div>
-									</td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
-					<p>Chú ý: chúng tôi chỉ chấp nhận thanh toán trước hoặc đặt lịch để đến cửa hàng thanh toán </p>
-					<div class="row g-4 text-center align-items-center justify-content-center border-bottom py-3">
-					</div>
-					<p>Hình Thức Thanh Toán </p>
-					<div class="row g-4 text-center align-items-center justify-content-center border-bottom py-3">
-					</div>
-					
-				</div>
-			</div>
-		</form>
-	</div>
+    <div class="container py-5">
+        <h1 class="mb-4">Thanh Toán</h1>
+        <form asp-action="Checkout" method="post">
+            <div class="row g-5">
+                <div class="col-md-12 col-lg-6 col-xl-7">
+                    @if (!ViewData.ModelState.IsValid)
+                    {
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                                {
+                                    <li>@error.ErrorMessage</li>
+                                }
+                            </ul>
+                        </div>
+                    }
+                    <div class="form-item delivery-info">
+                        <label class="form-label my-3">Người nhận hàng<sup>*</sup></label>
+                        <input type="text" name="HoTen" class="form-control" required>
+                    </div>
+                    <div class="form-item delivery-info">
+                        <label class="form-label my-3">Địa chỉ nhận hàng<sup>*</sup></label>
+                        <input type="text" name="DiaChi" class="form-control" placeholder="Hutech Campus Thủ Đức" required>
+                    </div>
+                    <div class="form-item delivery-info">
+                        <label class="form-label my-3">Số Điện thoại<sup>*</sup></label>
+                        <input type="tel" name="DienThoai" class="form-control" required>
+                    </div>
+                    <div class="form-check mt-3">
+                        <input type="checkbox" name="GiongKhachHang" id="useAccountInfo" class="form-check-input">
+                        <label class="form-check-label" for="useAccountInfo">Sử dụng thông tin tài khoản của tôi</label>
+                    </div>
+                    <div class="form-item mt-3">
+                        <textarea name="GhiChu" class="form-control" spellcheck="false" cols="30" rows="11" placeholder="Ghi chú"></textarea>
+                    </div>
+                    <input type="hidden" name="TongTien" value="@Model.Sum(p => p.ThanhTien).ToString("#,##0.00")VND">
+                    <input type="submit" name="CachThanhToan" class="btn border-danger text-uppercase text-danger w-100 mt-2" value="Đến Cửa Hàng">
+                    <input type="submit" name="CachThanhToan" class="btn border-danger text-uppercase text-danger w-100 mt-2" value="Thanh Toán Momo">
+                </div>
+                <div class="col-md-12 col-lg-6 col-xl-5">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Hình</th>
+                                    <th scope="col">Tên Sản Phẩm</th>
+                                    <th scope="col">Giá</th>
+                                    <th scope="col">Số Lượng</th>
+                                    <th scope="col">Tổng Tiền</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <th scope="row">
+                                            <div class="d-flex align-items-center mt-2">
+                                                <img src="~/images/@item.Hinh" class="img-fluid rounded-circle" style="width: 90px; height: 90px;" alt="@item.TenHH">
+                                            </div>
+                                        </th>
+                                        <td class="py-5">@item.TenHH</td>
+                                        <td class="py-5">@item.DonGia.ToString("#,##0.00")VND</td>
+                                        <td class="py-5">@item.SoLuong Xe</td>
+                                        <td class="py-5">@item.ThanhTien.ToString("#,##0.00")VND</td>
+                                    </tr>
+                                }
+                                <tr>
+                                    <th scope="row">
+                                    </th>
+                                    <td class="py-5"></td>
+                                    <td class="py-5"></td>
+                                    <td class="py-5"></td>
+                                    <td class="py-5"></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">
+                                    </th>
+                                    <td class="py-5">
+                                        <p class="mb-0 text-dark text-uppercase py-3">Tổng Tiền</p>
+                                    </td>
+                                    <td class="py-5"></td>
+                                    <td class="py-5"></td>
+                                    <td class="py-5">
+                                        <div class="py-3 border-bottom border-top">
+                                            <p class="mb-0 text-dark">@Model.Sum(p => p.ThanhTien).ToString("#,##0.00")VND</p>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p>Chú ý: chúng tôi chỉ chấp nhận thanh toán trước hoặc đặt lịch để đến cửa hàng thanh toán </p>
+                    <div class="row g-4 text-center align-items-center justify-content-center border-bottom py-3">
+                    </div>
+                    <p>Hình Thức Thanh Toán </p>
+                    <div class="row g-4 text-center align-items-center justify-content-center border-bottom py-3">
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
 </div>
 <!-- Checkout Page End -->
-
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            // Handle the checkbox for using account information
+            $('#useAccountInfo').change(function () {
+                if ($(this).is(':checked')) {
+                    // Ajax call to get user info
+                    $.ajax({
+                        url: '@Url.Action("GetUserInfo", "Cart")',
+                        type: 'GET',
+                        success: function (data) {
+                            if (data.success) {
+                                $('input[name="HoTen"]').val(data.fullName);
+                                $('input[name="DiaChi"]').val(data.address);
+                                $('input[name="DienThoai"]').val(data.phoneNumber);
+                            }
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+}

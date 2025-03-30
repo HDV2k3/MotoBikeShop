@@ -6,12 +6,10 @@
     ViewData["Title"] = "Tạo Mới Sản Phẩm";
 }
 
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -35,12 +33,11 @@
 <body id="page-top">
     <!-- Topbar -->
     <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-
         <!-- Sidebar Toggle (Topbar) -->
         <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
             <i class="fa fa-bars"></i>
         </button>
-        <h1>Thêm Mới</h1>     
+        <h1>Thêm Mới</h1>
         <h4>Sản Phẩm</h4>
     </nav>
     <hr />
@@ -49,11 +46,25 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-4">
-                    <form asp-action="Create">
+                    @if (ViewBag.ErrorMessage != null)
+                    {
+                        <div class="alert alert-danger">
+                            @ViewBag.ErrorMessage
+                        </div>
+                    }
+
+                    @if (ViewBag.WarningMessage != null)
+                    {
+                        <div class="alert alert-warning">
+                            @ViewBag.WarningMessage
+                        </div>
+                    }
+
+                    <form asp-action="Create" enctype="multipart/form-data">
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                         <div class="form-group">
                             <label asp-for="TenHH" class="control-label">Tên hàng hóa</label>
-                            <input asp-for="TenHH" class="form-control" />
+                            <input asp-for="TenHH" class="form-control" required />
                             <span asp-validation-for="TenHH" class="text-danger"></span>
                         </div>
                         <div class="form-group">
@@ -63,7 +74,9 @@
                         </div>
                         <div class="form-group">
                             <label asp-for="MaLoai" class="control-label">Mã loại</label>
-                            <select asp-for="MaLoai" class="form-control" asp-items="ViewBag.Loais"></select>
+                            <select asp-for="MaLoai" class="form-control" asp-items="ViewBag.Loais" required>
+                                <option value="">-- Chọn loại sản phẩm --</option>
+                            </select>
                             <span asp-validation-for="MaLoai" class="text-danger"></span>
                         </div>
                         <div class="form-group">
@@ -78,33 +91,79 @@
                         </div>
                         <div class="form-group">
                             <label asp-for="Hinh" class="control-label">Hình</label>
-                            <input type="file" asp-for="Hinh" class="form-control" />
+                            <input type="file" name="imageUrl" class="form-control" />
                             <span asp-validation-for="Hinh" class="text-danger"></span>
                         </div>
                         <div class="form-group">
                             <label asp-for="NgaySX" class="control-label">Ngày sản xuất</label>
-                            <input asp-for="NgaySX" class="form-control" />
+                            <input asp-for="NgaySX" class="form-control" type="date" required />
                             <span asp-validation-for="NgaySX" class="text-danger"></span>
                         </div>
                         <div class="form-group">
                             <label asp-for="GiamGia" class="control-label">Giảm giá</label>
-                            <input asp-for="GiamGia" class="form-control" />
+                            <input asp-for="GiamGia" class="form-control" value="0" />
                             <span asp-validation-for="GiamGia" class="text-danger"></span>
                         </div>
                         <div class="form-group">
                             <label asp-for="SoLanXem" class="control-label">Số lần xem</label>
-                            <input asp-for="SoLanXem" class="form-control" />
+                            <input asp-for="SoLanXem" class="form-control" value="0" />
                             <span asp-validation-for="SoLanXem" class="text-danger"></span>
                         </div>
                         <div class="form-group">
                             <label asp-for="MoTa" class="control-label">Mô tả</label>
-                            <input asp-for="MoTa" class="form-control" />
+                            <textarea asp-for="MoTa" class="form-control" rows="3"></textarea>
                             <span asp-validation-for="MoTa" class="text-danger"></span>
                         </div>
                         <div class="form-group">
+                            <label asp-for="ThietKe" class="control-label">Thiết kế</label>
+                            <textarea asp-for="ThietKe" class="form-control" rows="3"></textarea>
+                            <span asp-validation-for="ThietKe" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="DongCoCongNghe" class="control-label">Động cơ & Công nghệ</label>
+                            <textarea asp-for="DongCoCongNghe" class="form-control" rows="3"></textarea>
+                            <span asp-validation-for="DongCoCongNghe" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="TienIchAnToan" class="control-label">Tiện ích & An toàn</label>
+                            <textarea asp-for="TienIchAnToan" class="form-control" rows="3"></textarea>
+                            <span asp-validation-for="TienIchAnToan" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
                             <label asp-for="MaNCC" class="control-label">Mã nhà cung cấp</label>
-                            <select asp-for="MaNCC" class="form-control" asp-items="ViewBag.NhaCungCaps"></select>
+                            @if (ViewBag.NhaCungCaps != null)
+                            {
+                                <select asp-for="MaNCC" class="form-control" asp-items="ViewBag.NhaCungCaps" required>
+                                    <option value="">-- Chọn nhà cung cấp --</option>
+                                </select>
+                            }
+                            else
+                            {
+                                <select class="form-control" disabled>
+                                    <option>-- Không có dữ liệu nhà cung cấp --</option>
+                                </select>
+                                <input type="hidden" name="MaNCC" value="" />
+                            }
                             <span asp-validation-for="MaNCC" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="MaTSKT" class="control-label">Thông số kỹ thuật</label>
+                            @if (ViewBag.ThongSoKyThuats != null)
+                            {
+                                <select asp-for="MaTSKT" class="form-control" asp-items="ViewBag.ThongSoKyThuats" required>
+                                    <option value="">-- Chọn thông số kỹ thuật --</option>
+                                </select>
+                            }
+                            else
+                            {
+                                <div class="alert alert-warning">
+                                    Không thể tải dữ liệu thông số kỹ thuật. Vui lòng thử lại sau.
+                                </div>
+                                <select class="form-control" name="MaTSKT" disabled>
+                                    <option>-- Không có dữ liệu --</option>
+                                </select>
+                            }
+                            <span asp-validation-for="MaTSKT" class="text-danger"></span>
                         </div>
                         <div class="form-group">
                             <a class="btn btn-danger" asp-action="Index"><i class="bi bi-chevron-left"></i> Back to List</a>
@@ -115,7 +174,7 @@
             </div>
         </div>
     </div>
-    
+
     <!-- Bootstrap core JavaScript-->
     <script src="/vendor_admin/jquery/jquery.min.js"></script>
     <script src="/vendor_admin/bootstrap/js/bootstrap.bundle.min.js"></script>

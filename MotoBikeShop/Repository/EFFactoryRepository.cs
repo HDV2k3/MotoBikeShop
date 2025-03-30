@@ -21,10 +21,26 @@ namespace MotoBikeShop.Repository
             _context.NhaCungCaps.Remove(nhacungcap);
             await _context.SaveChangesAsync();
           
-        }     
+        }
+        //public async Task<IEnumerable<NhaCungCap>> GetAllAsync()
+        //{
+        //    return await _context.NhaCungCaps.ToListAsync();
+        //}
         public async Task<IEnumerable<NhaCungCap>> GetAllAsync()
         {
-            return await _context.NhaCungCaps.ToListAsync();
+            try
+            {
+                // Make sure to check for null and return an empty list instead
+                var result = await _context.NhaCungCaps.ToListAsync();
+                return result ?? new List<NhaCungCap>();
+            }
+            catch (Exception ex)
+            {
+                // Log the exception
+                Console.WriteLine($"Error in FactoryRepository.GetAllAsync: {ex.Message}");
+                // Return an empty list instead of null
+                return new List<NhaCungCap>();
+            }
         }
 
         public async Task<NhaCungCap> GetByIdAsync(string id)

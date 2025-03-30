@@ -96,70 +96,91 @@ namespace MotoBikeShop.Controllers
         [HttpPost]
         public IActionResult Checkout(CheckoutVM model)
         {
+            // Manually validate required fields
+            if (string.IsNullOrWhiteSpace(model.HoTen))
+            {
+                ModelState.AddModelError("HoTen", "Vui lòng nhập họ tên người nhận");
+            }
+
+            if (string.IsNullOrWhiteSpace(model.DiaChi))
+            {
+                ModelState.AddModelError("DiaChi", "Vui lòng nhập địa chỉ nhận hàng");
+            }
+
+            if (string.IsNullOrWhiteSpace(model.DienThoai))
+            {
+                ModelState.AddModelError("DienThoai", "Vui lòng nhập số điện thoại");
+            }
+
+            if (string.IsNullOrWhiteSpace(model.CachThanhToan))
+            {
+                ModelState.AddModelError("CachThanhToan", "Vui lòng chọn phương thức thanh toán");
+            }
+
             if (ModelState.IsValid)
             {
                 if (model.CachThanhToan == "Đến Cửa Hàng")
                 {
-                    if (ModelState.IsValid)
+                    var customerId = User.FindFirstValue(ClaimTypes.NameIdentifier) ?? "Guest-User";
+                    var khachHang = new ApplicationUser();
+
+                    if (model.GiongKhachHang && !string.IsNullOrEmpty(customerId) && customerId != "Guest-User")
                     {
+                        khachHang = db.Users.SingleOrDefault(kh => kh.Id == customerId) ?? new ApplicationUser();
+                    }
 
-                        var customerId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-                        var khachHang = new ApplicationUser();
-                        if (model.GiongKhachHang)
+                    var hoadon = new HoaDon
+                    {
+                        UserId = !string.IsNullOrEmpty(customerId) ? customerId : "Guest-User",
+                        HoTen = !string.IsNullOrEmpty(model.HoTen) ? model.HoTen : (khachHang.FullName ?? "Khách hàng"),
+                        DiaChi = !string.IsNullOrEmpty(model.DiaChi) ? model.DiaChi : (khachHang.Address ?? "Chưa có địa chỉ"),
+                        PhoneNumber = !string.IsNullOrEmpty(model.DienThoai) ? model.DienThoai : (khachHang.PhoneNumber ?? "Chưa có số điện thoại"),
+                        NgayDat = DateTime.Now,
+                        NgayGiao = DateTime.Now.AddDays(3),
+                        CachThanhToan = "Đến Cửa Hàng",
+                        CachVanChuyen = "J&T",
+                        MaTrangThai = 0,
+                        GhiChu = !string.IsNullOrEmpty(model.GhiChu) ? model.GhiChu : "Không có ghi chú",
+                        PhiVanChuyen = model.PhiVanChuyen ?? 0,
+                    };
+
+                    db.Database.BeginTransaction();
+                    try
+                    {
+                        db.Add(hoadon);
+                        db.SaveChanges();
+
+                        var cthds = new List<ChiTietHd>();
+                        if (Cart != null && Cart.Any())
                         {
-                            khachHang = db.Users.SingleOrDefault(kh => kh.Id == customerId);
-                        }
-
-                        var hoadon = new HoaDon
-                        {
-                            UserId = customerId ?? khachHang.Id,
-                            HoTen = model.HoTen ?? khachHang.FullName,
-                            DiaChi = model.DiaChi ?? khachHang.Address,
-                            PhoneNumber = model.DienThoai ?? khachHang.PhoneNumber,
-                            NgayDat = DateTime.Now,
-                            NgayGiao = DateTime.Now.AddDays(3),
-                            CachThanhToan = "Đến Cửa Hàng",
-                            CachVanChuyen = "J&T",
-                            MaTrangThai = 0,
-                            GhiChu = model.GhiChu,
-                            PhiVanChuyen = 0,
-                        };
-
-                        db.Database.BeginTransaction();
-                        try
-                        {
-                            db.Add(hoadon);
-                            db.SaveChanges();
-
-                            var cthds = new List<ChiTietHd>();
                             foreach (var item in Cart)
                             {
                                 cthds.Add(new ChiTietHd
                                 {
                                     MaHD = hoadon.MaHD,
-                                    SoLuong = item.SoLuong,
-                                    DonGia = item.DonGia,
+                                    SoLuong = item.SoLuong > 0 ? item.SoLuong : 1,
+                                    DonGia = item.DonGia > 0 ? item.DonGia : 0,
                                     MaHH = item.MaHH,
                                     GiamGia = 0
                                 });
                             }
                             db.AddRange(cthds);
                             db.SaveChanges();
-                            db.Database.CommitTransaction();
+                        }
 
-                            HttpContext.Session.Set<List<CartItem>>(MySetting.CART_KEY, new List<CartItem>());
-                            return View("Success");
-                        }
-                        catch
-                        {
-                            return View("Error");
-                            db.Database.RollbackTransaction();
-                        }
+                        db.Database.CommitTransaction();
+
+                        HttpContext.Session.Set<List<CartItem>>(MySetting.CART_KEY, new List<CartItem>());
+                        return View("Success");
                     }
-
-                    return View(Cart);
+                    catch (Exception ex)
+                    {
+                        db.Database.RollbackTransaction();
+                        // Log exception if you have logging
+                        // _logger.LogError(ex, "Error processing store checkout");
+                        return View("Error");
+                    }
                 }
-
                 else if (model.CachThanhToan == "Thanh Toán Momo")
                 {
                     //request params need to request to MoMo system
@@ -169,11 +190,17 @@ namespace MotoBikeShop.Controllers
                     string serectkey = "sFcbSGRSJjwGxwhhcEktCHWYUuTuPNDB";
                     string orderInfo = "MotoBike Shop";
                     string returnUrl = "https://localhost:44375/Cart/Success";
-                    string notifyurl = "https://localhost:44375/Cart/SavePayment"; //lưu ý: notifyurl không được sử dụng localhost, có thể sử dụng ngrok để public localhost trong quá trình test
-                    string amount = model.TongTien.Replace(".", "").Replace(",00","").Replace("VND", "");
-                    string orderid = DateTime.Now.Ticks.ToString(); //mã đơn hàng
+                    string notifyurl = "https://localhost:44375/Cart/SavePayment";
+
+                    // Null check for TongTien
+                    string amount = !string.IsNullOrEmpty(model.TongTien)
+                        ? model.TongTien.Replace(".", "").Replace(",00", "").Replace("VND", "").Trim()
+                        : Cart.Sum(p => p.ThanhTien).ToString("#").Replace(".", "");
+
+                    string orderid = DateTime.Now.Ticks.ToString();
                     string requestId = DateTime.Now.Ticks.ToString();
                     string extraData = "";
+
                     //Before sign HMAC SHA256 signature
                     string rawHash = "partnerCode=" +
                         partnerCode + "&accessKey=" +
@@ -192,19 +219,19 @@ namespace MotoBikeShop.Controllers
 
                     //build body json request
                     JObject message = new JObject
-                    {
-                    { "partnerCode", partnerCode },
-                    { "accessKey", accessKey },
-                    { "requestId", requestId },
-                    { "amount", amount },
-                    { "orderId", orderid },
-                    { "orderInfo", orderInfo },
-                    { "returnUrl", returnUrl },
-                    { "notifyUrl", notifyurl },
-                    { "extraData", extraData },
-                    { "requestType", "captureMoMoWallet" },
-                    { "signature", signature }
-                    };
+            {
+                { "partnerCode", partnerCode },
+                { "accessKey", accessKey },
+                { "requestId", requestId },
+                { "amount", amount },
+                { "orderId", orderid },
+                { "orderInfo", orderInfo },
+                { "returnUrl", returnUrl },
+                { "notifyUrl", notifyurl },
+                { "extraData", extraData },
+                { "requestType", "captureMoMoWallet" },
+                { "signature", signature }
+            };
 
                     string responseFromMomo = PaymentRequest.sendPaymentRequest(endpoint, message.ToString());
 
@@ -212,22 +239,27 @@ namespace MotoBikeShop.Controllers
 
                     if (jmessage.TryGetValue("payUrl", out JToken payUrlToken))
                     {
-                        var customerId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                        var customerId = User.FindFirstValue(ClaimTypes.NameIdentifier) ?? "Guest-User";
                         var khachHang = new ApplicationUser();
-                    
+
+                        if (model.GiongKhachHang && !string.IsNullOrEmpty(customerId) && customerId != "Guest-User")
+                        {
+                            khachHang = db.Users.SingleOrDefault(kh => kh.Id == customerId) ?? new ApplicationUser();
+                        }
+
                         var hoadon = new HoaDon
                         {
-                            UserId = customerId,
-                            HoTen = model.HoTen ?? khachHang.FullName,
-                            DiaChi = model.DiaChi ?? khachHang.Address,
-                            PhoneNumber = model.DienThoai ?? khachHang.PhoneNumber,
+                            UserId = !string.IsNullOrEmpty(customerId) ? customerId : "Guest-User",
+                            HoTen = !string.IsNullOrEmpty(model.HoTen) ? model.HoTen : (khachHang.FullName ?? "Khách hàng"),
+                            DiaChi = !string.IsNullOrEmpty(model.DiaChi) ? model.DiaChi : (khachHang.Address ?? "Chưa có địa chỉ"),
+                            PhoneNumber = !string.IsNullOrEmpty(model.DienThoai) ? model.DienThoai : (khachHang.PhoneNumber ?? "Chưa có số điện thoại"),
                             NgayDat = DateTime.Now,
                             NgayGiao = DateTime.Now.AddDays(3),
                             CachThanhToan = "MoMo",
                             CachVanChuyen = "J&T",
                             MaTrangThai = 1,
-                            GhiChu = model.GhiChu,
-                            PhiVanChuyen = 0,
+                            GhiChu = !string.IsNullOrEmpty(model.GhiChu) ? model.GhiChu : "Không có ghi chú",
+                            PhiVanChuyen = model.PhiVanChuyen ?? 0,
                         };
 
                         db.Database.BeginTransaction();
@@ -237,19 +269,22 @@ namespace MotoBikeShop.Controllers
                             db.SaveChanges();
 
                             var cthds = new List<ChiTietHd>();
-                            foreach (var item in Cart)
+                            if (Cart != null && Cart.Any())
                             {
-                                cthds.Add(new ChiTietHd
+                                foreach (var item in Cart)
                                 {
-                                    MaHD = hoadon.MaHD,
-                                    SoLuong = item.SoLuong,
-                                    DonGia = item.DonGia,
-                                    MaHH = item.MaHH,
-                                    GiamGia = 0
-                                });
+                                    cthds.Add(new ChiTietHd
+                                    {
+                                        MaHD = hoadon.MaHD,
+                                        SoLuong = item.SoLuong > 0 ? item.SoLuong : 1,
+                                        DonGia = item.DonGia > 0 ? item.DonGia : 0,
+                                        MaHH = item.MaHH,
+                                        GiamGia = 0
+                                    });
+                                }
+                                db.AddRange(cthds);
+                                db.SaveChanges();
                             }
-                            db.AddRange(cthds);
-                            db.SaveChanges();
 
                             db.Database.CommitTransaction();
 
@@ -257,25 +292,49 @@ namespace MotoBikeShop.Controllers
 
                             return Redirect(payUrlToken.ToString());
                         }
-                        catch
+                        catch (Exception ex)
                         {
                             db.Database.RollbackTransaction();
+                            // Log exception if you have logging
+                            // _logger.LogError(ex, "Error processing MoMo checkout");
                             return View("Error");
                         }
                     }
                     else
                     {
                         // Handle error when "payUrl" does not exist in the response
-                        // For example, you may want to redirect to an error page or back to the checkout form
                         return View("Error");
                     }
-
                 }
             }
-            else { return View("Error"); }
-            return View(model);
-        }
 
+            // If we reach here, model is not valid or something else went wrong
+            // Return to the checkout view with existing cart items
+            return View(Cart);
+        }
+        [Authorize]
+        public IActionResult GetUserInfo()
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (string.IsNullOrEmpty(userId))
+            {
+                return Json(new { success = false });
+            }
+
+            var user = db.Users.SingleOrDefault(u => u.Id == userId);
+            if (user == null)
+            {
+                return Json(new { success = false });
+            }
+
+            return Json(new
+            {
+                success = true,
+                fullName = user.FullName ?? string.Empty,
+                address = user.Address ?? string.Empty,
+                phoneNumber = user.PhoneNumber ?? string.Empty
+            });
+        }
         // result check out 
         [Authorize]
 

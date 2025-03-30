@@ -12,8 +12,6 @@ namespace MotoBikeShop.Data
         [MaxLength(50)]
         public string TenCongTy { get; set; }
 
-        [Required]
-        [MaxLength(50)]
         public string Logo { get; set; }
 
         [MaxLength(50)]
@@ -26,7 +24,6 @@ namespace MotoBikeShop.Data
         [MaxLength(50)]
         public string DienThoai { get; set; }
 
-        [MaxLength(50)]
         public string DiaChi { get; set; }
 
         public string MoTa { get; set; }
