@@ -30,6 +30,7 @@ public partial class motoBikeVHDbContext : IdentityDbContext<ApplicationUser>
     public DbSet<MoMo> results { get; set; }
     public DbSet<EmailCustomer> EmailCustomers { get; set; }
     public DbSet<ThongSoKyThuat> thongSoKyThuats { get; set; }
+    public DbSet<HangHoaTranslation> HangHoaTranslations { get; set; }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         var yourEntity1 = new Loai { MaLoai = 1, TenLoai = "Xe Côn", TenLoaiAlias = "xe-con", MoTa = "Động Cơ Mạnh Mẽ ", Hinh = "xecon.png" };

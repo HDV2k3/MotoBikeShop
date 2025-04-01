@@ -11,6 +11,8 @@ namespace MotoBikeShop.ViewModels
         public double DonGia { get; set; }   
         public required String MoTaNgan { get; set; }   
         public required String TenLoai { get; set; }
+        public string CurrentLanguage { get; set; }
+        public bool HasTranslation { get; set; }
     }
     public class CTHangHoaVM
     {

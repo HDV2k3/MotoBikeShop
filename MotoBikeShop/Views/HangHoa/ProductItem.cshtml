@@ -1,4 +1,9 @@
 ﻿@model IEnumerable<MotoBikeShop.ViewModels.HangHoaVM>
+@using Microsoft.AspNetCore.Mvc.Localization
+@using MotoBikeShop.Resources
+@inject IViewLocalizer Localizer
+@inject IHtmlLocalizer<SharedResource> SharedLocalizer
+
 <style>
     .homepage-product-slide-tab .homepage-product-slide-tab-detail {
         opacity: 0;
@@ -9,7 +14,6 @@
         opacity: 1;
     }
 </style>
-
 <div class="container">
     <div class="row">
         @foreach (var item in Model)
@@ -22,15 +26,15 @@
                                 <img src="~/images/@item.Hinh" alt="@item.TenHh" style="max-width: 100%; max-height: 100%;">
                             </div>
                             <a asp-action="Detail" asp-controller="HangHoa" asp-route-id="@item.MaHh">
-                                <div class="homepage-product-slide-tab-detail d-flex align-items-center justify-content-center">Xem chi tiết</div>
+                                <div class="homepage-product-slide-tab-detail d-flex align-items-center justify-content-center">@Localizer["ViewDetail"]</div>
                             </a>
                         </div>
                     </div>
                     <div class="name-price-motor w-100">
                         <p class="homepage-product-tab-name homepage-txt-name text-danger font-weight-bold " style="font-weight:bolder">@item.TenHh</p>
                         <div class="d-flex justify-content-between flex-lg-wrap">
-                            <p class="homepage-product-slide-tab-price homepage-txt-price " style="font-weight:bold">Từ @item.DonGia.ToString("#,##0.00")<sup class="supper">VNĐ</sup></p>
-                            <a asp-action="AddToCart" asp-controller="Cart" asp-route-id="@item.MaHh" class="btn border border-secondary rounded-pill px-3 text-danger"><i class="fa fa-shopping-bag me-2 text-danger"></i> Đưa vào giỏ</a>
+                            <p class="homepage-product-slide-tab-price homepage-txt-price " style="font-weight:bold">@Localizer["From"] @item.DonGia.ToString("#,##0.00")<sup class="supper">@SharedLocalizer["Currency"]</sup></p>
+                            <a asp-action="AddToCart" asp-controller="Cart" asp-route-id="@item.MaHh" class="btn border border-secondary rounded-pill px-3 text-danger"><i class="fa fa-shopping-bag me-2 text-danger"></i> @Localizer["AddToCart"]</a>
                         </div>
                     </div>
                 </div>

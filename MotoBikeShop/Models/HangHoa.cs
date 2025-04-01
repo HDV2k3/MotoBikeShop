@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MotoBikeShop.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -50,5 +51,6 @@ namespace MotoBikeShop.Data
         public virtual NhaCungCap MaNccNavigation { get; set; } = null!;
         [ForeignKey("MaTSKT")]
         public virtual ThongSoKyThuat MaTSKTNavigation { get; set; } = null!;
+        public virtual ICollection<HangHoaTranslation> Translations { get; set; }
     }
 }

@@ -1,38 +1,36 @@
-﻿
-@model IEnumerable<MotoBikeShop.ViewModels.HangHoaVM>
+﻿@model IEnumerable<MotoBikeShop.ViewModels.HangHoaVM>
+@using Microsoft.AspNetCore.Mvc.Localization
+@using MotoBikeShop.Resources
+@inject IViewLocalizer Localizer
+@inject IHtmlLocalizer<SharedResource> SharedLocalizer
 
 @{
-    ViewData["Title"] = "Sản Phẩm";
+    ViewData["Title"] = Localizer["PageTitle"];
     Layout = "_DanhSachHangHoa";
 }
-
 <!-- Single Page Header start -->
 @section BreadCum {
     <div class="container-fluid page-header py-5">
-        <h1 class="text-center text-white display-6">Sản Phẩm</h1>
+        <h1 class="text-center text-white display-6">@Localizer["PageTitle"]</h1>
         <ol class="breadcrumb justify-content-center mb-0">
-            <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Trang chủ</a></li>
-            <li class="breadcrumb-item active text-white">Sản Phẩm</li>
+            <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">@SharedLocalizer["Home"]</a></li>
+            <li class="breadcrumb-item active text-white">@Localizer["Products"]</li>
         </ol>
     </div>
 }
 <!-- Single Page Header End -->
-
 <div class="container">
     <div class="row">
-      
-            @await Html.PartialAsync("ProductItem", Model)
-            
-        
+        @await Html.PartialAsync("ProductItem", Model)
     </div>
-    
+
     <div class="pagination justify-content-center mt-3">
         <div class="row row-cols-auto d-flex">
             <div class="col-auto">
                 <span class="page-item @(ViewBag.CurrentPage == 1 ? "disabled" : "")">
-                    <a class="page-link"  href="@Url.Action("Index", new { page = ViewBag.CurrentPage - 1 })" aria-label="Previous">
+                    <a class="page-link" href="@Url.Action("Index", new { page = ViewBag.CurrentPage - 1 })" aria-label="Previous">
                         <span aria-hidden="true">&laquo;</span>
-                        <span class="sr-only">Previous</span>
+                        <span class="sr-only">@Localizer["Previous"]</span>
                     </a>
                 </span>
             </div>
@@ -48,7 +46,7 @@
                 <span class="page-item @(ViewBag.CurrentPage == ViewBag.TotalPages ? "disabled" : "")">
                     <a class="page-link" href="@Url.Action("Index", new { page = ViewBag.CurrentPage + 1 })" aria-label="Next">
                         <span aria-hidden="true">&raquo;</span>
-                        <span class="sr-only">Next</span>
+                        <span class="sr-only">@Localizer["Next"]</span>
                     </a>
                 </span>
             </div>

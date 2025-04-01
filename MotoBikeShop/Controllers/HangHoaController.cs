@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using MotoBikeShop.Data;
 using MotoBikeShop.Models;
 using MotoBikeShop.Repository;
+using MotoBikeShop.Service;
 using MotoBikeShop.ViewModels;
 using Newtonsoft.Json;
 using System.Net.Http;
@@ -16,15 +17,18 @@ namespace MotoBikeShop.Controllers
         private readonly IProductRepository _productRepository;
 
         private readonly motoBikeVHDbContext db;
+        private readonly ILocalizationService _localizationService;
+
 
         private readonly HttpClient _httpClient;
-        public HangHoaController(motoBikeVHDbContext context, IProductRepository productRepository)
+        public HangHoaController(motoBikeVHDbContext context, IProductRepository productRepository, ILocalizationService localizationService)
         {
             db = context;
             _httpClient = new HttpClient();
             _productRepository = productRepository;
+            _localizationService = localizationService;
         }
-        public IActionResult Index(int? loai, int? page, string? ncc)
+        public async Task<IActionResult> Index(int? loai, int? page, string? ncc)
         {
             var hanghoas = db.HangHoas.AsQueryable();
             if (loai.HasValue)
@@ -35,25 +39,46 @@ namespace MotoBikeShop.Controllers
             {
                 hanghoas = hanghoas.Where(p => p.MaNCC == ncc);
             }
+
             int pageSize = 8; // Số lượng sản phẩm trên mỗi trang
             int pageNumber = page ?? 1; // Trang hiện tại
 
-            var pagedHanghoas = hanghoas.Select(p => new HangHoaVM
+            // Lấy danh sách mã hàng hóa cần hiển thị trên trang hiện tại
+            var pagedProductIds = hanghoas
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .Select(p => p.MaHH)
+                .ToList();
+
+            // Chuẩn bị danh sách hàng hóa với thông tin đa ngôn ngữ
+            var currentLanguage = _localizationService.GetCurrentLanguageCode();
+            var pagedHanghoas = new List<HangHoaVM>();
+
+            foreach (var maHh in pagedProductIds)
             {
-                MaHh = p.MaHH,
-                TenHh = p.TenHH,
-                DonGia = p.DonGia ?? 0,
-                Hinh = p.Hinh ?? "",
-                MoTaNgan = p.MoTaDonVi ?? "",
-                TenLoai = p.MaLoaiNavigation.TenLoai
-            })
-            .Skip((pageNumber - 1) * pageSize)
-            .Take(pageSize)
-            .ToList();
+                var hangHoa = await db.HangHoas.FindAsync(maHh);
+
+                // Kiểm tra xem có bản dịch cho sản phẩm này không
+                var translation = await db.HangHoaTranslations
+                    .FirstOrDefaultAsync(t => t.MaHH == maHh && t.LanguageCode == currentLanguage);
+
+                var hangHoaVM = new HangHoaVM
+                {
+                    MaHh = maHh,
+                    TenHh = translation?.TenHH ?? hangHoa.TenHH,
+                    DonGia = hangHoa.DonGia ?? 0,
+                    Hinh = hangHoa.Hinh ?? "",
+                    MoTaNgan = translation?.MoTaNgan ?? hangHoa.MoTaDonVi ?? "",
+                    TenLoai = hangHoa.MaLoaiNavigation?.TenLoai ?? "Chưa có loại",
+                    CurrentLanguage = currentLanguage,
+                    HasTranslation = translation != null
+                };
+
+                pagedHanghoas.Add(hangHoaVM);
+            }
 
             int totalItems = hanghoas.Count();
             int totalPages = (int)Math.Ceiling(totalItems / (double)pageSize);
-
             ViewBag.CurrentPage = pageNumber;
             ViewBag.TotalPages = totalPages;
 

@@ -1,0 +1,23 @@
+﻿@model MotoBikeShop.ViewModels.LanguageSwitcherViewModel
+@{
+    var returnUrl = string.IsNullOrEmpty(Context.Request.Path) ? "~/" : $"~{Context.Request.Path}{Context.Request.QueryString}";
+}
+
+<div class="language-switcher">
+    <form method="post" action="/Language/SetLanguage">
+        <input type="hidden" name="returnUrl" value="@returnUrl" />
+        <select name="culture" onchange="this.form.submit()">
+            @foreach (var culture in Model.SupportedLanguages)
+            {
+                @if (culture.Code == Model.CurrentLanguage)
+                {
+                    <option value="@culture.Code" selected>@culture.Name</option>
+                }
+                else
+                {
+                    <option value="@culture.Code">@culture.Name</option>
+                }
+            }
+        </select>
+    </form>
+</div>

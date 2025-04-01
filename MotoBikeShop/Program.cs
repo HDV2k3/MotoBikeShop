@@ -1,13 +1,17 @@
 ﻿
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc.ApplicationParts;
+using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using MotoBikeShop.Data;
 using MotoBikeShop.Models;
 using MotoBikeShop.Repository;
+using MotoBikeShop.Service;
 using MotoBikeShop.ViewComponents;
+using System.Globalization;
 using System.Text;
 
 
@@ -15,11 +19,44 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
+// Thêm các dòng này vào phần services
+builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+builder.Services.AddScoped<ILocalizationService, LocalizationService>();
+builder.Services.AddTransient<LanguageSwitcherViewComponent>();
+builder.Services.Configure<RequestLocalizationOptions>(options =>
+{
+    var supportedCultures = new[]
+    {
+        new CultureInfo("vi-VN"),
+        new CultureInfo("en-US")
+    };
+
+    options.DefaultRequestCulture = new RequestCulture("vi-VN");
+    options.SupportedCultures = supportedCultures;
+    options.SupportedUICultures = supportedCultures;
+
+    // Đặt cookie provider làm provider đầu tiên
+    options.RequestCultureProviders.Clear();
+    options.RequestCultureProviders.Add(new CookieRequestCultureProvider());
+    options.RequestCultureProviders.Add(new QueryStringRequestCultureProvider());
+    options.RequestCultureProviders.Add(new AcceptLanguageHeaderRequestCultureProvider());
+});
+
+builder.Services.AddControllersWithViews()
+    .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
+    .AddDataAnnotationsLocalization(options =>
+    {
+        options.DataAnnotationLocalizerProvider = (type, factory) =>
+            factory.Create(typeof(MotoBikeShop.Resources.SharedResource));
+    });
 builder.Services.AddDbContext<motoBikeVHDbContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
-
+builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+builder.Services.AddScoped<ILocalizationService, LocalizationService>();
+builder.Services.AddTransient<LanguageSwitcherViewComponent>();
 builder.Services.AddSingleton<IHostedService, BackgroundService>();
 builder.Services.AddHttpClient<ReviewViewComponent>();
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
@@ -57,6 +94,7 @@ using (var scope = app.Services.CreateScope())
     var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
     await InitUser.Initialize(services, userManager, roleManager);
 }
+app.UseRequestLocalization();
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();

@@ -1,6 +1,10 @@
 ﻿@{
     Layout = "_LayoutCustomer";
 }
+@using Microsoft.AspNetCore.Mvc.Localization
+@using MotoBikeShop.Resources
+@inject IViewLocalizer Localizer
+@inject IHtmlLocalizer<SharedResource> SharedLocalizer
 <body>
     @RenderSection("BreadCum", required: false)
 

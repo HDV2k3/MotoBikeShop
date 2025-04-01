@@ -1,0 +1,27 @@
+﻿<h1>Culture Test</h1>
+<p>Current culture: @ViewBag.CurrentCulture</p>
+<p>Supported cultures: @ViewBag.SupportedCultures</p>
+<p>Cookie value: @ViewBag.CookieValue</p>
+
+<h2>Change Culture</h2>
+<form method="post" action="/Test/SetCulture">
+    <select name="culture" onchange="this.form.submit()">
+        @if (ViewBag.CurrentCulture == "vi-VN")
+        {
+            <option value="vi-VN" selected>Tiếng Việt</option>
+        }
+        else
+        {
+            <option value="vi-VN">Tiếng Việt</option>
+        }
+
+        @if (ViewBag.CurrentCulture == "en-US")
+        {
+            <option value="en-US" selected>English</option>
+        }
+        else
+        {
+            <option value="en-US">English</option>
+        }
+    </select>
+</form>
