@@ -1,0 +1,157 @@
+﻿#!/bin/bash
+
+# Thông tin từ request
+FEEDBACK_ID="ZmVlZGJhY2s6MTAxNjM3MzUzMDQwNjI2NQ=="
+COOKIE="datr=kecaZhsbV6pGNed-DL333GAK; sb=n-caZjWvE_AVoJlcu2RhGLK0; ps_n=1; ps_l=1; dpr=1.25; c_user=100021931052743; fr=1BVEOUfLNE0KrQt04.AWfa8c7V6qfOzL2sfw79QWuMWKsTx9j6aPzrCw08dh9XnkCDjFk.Bn7CUv..AAA.0.0.Bn7CUv.AWeVczzP9z47-oEfaw3quhiRxIg; xs=1%3AQ1vnKOUL27jFHg%3A2%3A1736604909%3A-1%3A6203%3A%3AAcU0B8xlF0eqAnvIGx5NSd6OdqOlHEiQXpKU9AMvxHVP; presence=C%7B%22lm3%22%3A%22g.9465280693551282%22%2C%22t3%22%3A%5B%5D%2C%22utc3%22%3A1743530142009%2C%22v%22%3A1%7D; wd=1536x522"
+FB_DTSG="NAcOZKSQjigJ1RknLyH_XHM0YO6xpxKbcXIf39f_-ZVYsaw6Gf8T6vA:1:1736604909"
+USER_ID="100021931052743"
+LSD="FWXVQnnpgKllxGTrPaBiTA"
+
+# Tạo tệp JSON để lưu kết quả
+echo "[]" > all_commenters.json
+
+# File tạm
+TEMP_FILE=$(mktemp)
+
+# Mảng để lưu ID đã thu thập
+COLLECTED_IDS=()
+
+# Hàm để thêm commenter vào file JSON
+add_commenter() {
+    local id="$1" local name="$2" # Kiểm tra nếu ID đã có for existing_id in "${COLLECTED_IDS[@]}";
+    do if [ "$existing_id" == "$id" ];
+    then return 0 fi done # Thêm vào mảng COLLECTED_IDS+=("$id") # Thêm vào file JSON local commenter="{\"id\":\"$id\",\"name\":\"$name\"}" local content=$(cat all_commenters.json) if [ "$content" == "[]" ];
+    then echo "[$commenter]" > all_commenters.json else content="${content%]}" echo "${content}, $commenter]" > all_commenters.json fi echo "Đã thêm người bình luận: $name (ID: $id)"
+}
+
+echo "===== Phương pháp 1: Lấy danh sách người bình luận từ API ====="
+
+# Lấy danh sách commenters
+curl -s -X POST 'https://www.facebook.com/api/graphql/' \
+-H 'authority: www.facebook.com' \
+-H 'accept: */*' \
+-H 'accept-language: vi,en-US;q=0.9,en;q=0.8,fr;q=0.7' \
+-H 'content-type: application/x-www-form-urlencoded' \
+-H "cookie: $COOKIE" \
+-H 'origin: https://www.facebook.com' \
+-H 'referer: https://www.facebook.com/story.php?story_fbid=1016373530406265&id=100090227653227' \
+-H 'sec-ch-ua: "Chromium";v="134", "Not:A-Brand";v="24", "Google Chrome";v="134"' \
+-H 'sec-ch-ua-mobile: ?0' \
+-H 'sec-ch-ua-platform: "Windows"' \
+-H 'sec-fetch-dest: empty' \
+-H 'sec-fetch-mode: cors' \
+-H 'sec-fetch-site: same-origin' \
+-H 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36' \
+-H 'x-fb-friendly-name: CometUFICommentsCountTooltipContentQuery' \
+-H "x-fb-lsd: $LSD" \
+--data-urlencode "av=$USER_ID" \
+--data-urlencode "__user=$USER_ID" \
+--data-urlencode "__a=1" \
+--data-urlencode "fb_dtsg=$FB_DTSG" \
+--data-urlencode "lsd=$LSD" \
+--data-urlencode "fb_api_caller_class=RelayModern" \
+--data-urlencode "fb_api_req_friendly_name=CometUFICommentsCountTooltipContentQuery" \
+--data-urlencode "variables={\"feedbackTargetID\":\"$FEEDBACK_ID\",\"first\":100}" \
+--data-urlencode "server_timestamps=true" \
+--data-urlencode "doc_id=7651982391555075" \ > "$TEMP_FILE"
+
+# Lưu response để debug
+cp "$TEMP_FILE" commenters_response.json
+
+# Trích xuất dữ liệu và thêm vào file
+while read -r id name; do
+[ -z "$id" ] && continue
+add_commenter "$id" "$name"
+done < <(grep -o '"node":{"__typename":"User","name":"[^"]*","id":"[^"]*"}' "$TEMP_FILE" | sed 's/"node":{"__typename":"User","name":"//g' | sed 's/","id":"/ /g' | sed 's/"}//g')
+
+echo "===== Phương pháp 2: Lấy bình luận và trích xuất tác giả ====="
+
+# Biến để theo dõi phân trang
+CURSOR=""
+HAS_NEXT_PAGE=true
+PAGE=0
+
+# Lấy bình luận với phân trang
+while $HAS_NEXT_PAGE && [ $PAGE -lt 10 ]; do
+PAGE=$((PAGE + 1))
+echo "Đang lấy trang bình luận thứ $PAGE..."
+
+# Tạo variables tùy theo có cursor hay không
+if [ -z "$CURSOR" ]; then
+VARIABLES="{\"feedbackID\":\"$FEEDBACK_ID\",\"first\":50,\"includeNestedComments\":true,\"orderby\":\"TOPLEVEL\",\"displayCommentsFeedbackContext\":null,\"feedLocation\":\"PERMALINK\"}"
+else
+VARIABLES="{\"feedbackID\":\"$FEEDBACK_ID\",\"first\":50,\"after\":\"$CURSOR\",\"includeNestedComments\":true,\"orderby\":\"TOPLEVEL\",\"displayCommentsFeedbackContext\":null,\"feedLocation\":\"PERMALINK\"}"
+fi
+
+# Gửi request lấy bình luận
+curl -s -X POST 'https://www.facebook.com/api/graphql/' \
+-H 'authority: www.facebook.com' \
+-H 'accept: */*' \
+-H 'accept-language: vi,en-US;q=0.9,en;q=0.8,fr;q=0.7' \
+-H 'content-type: application/x-www-form-urlencoded' \
+-H "cookie: $COOKIE" \
+-H 'origin: https://www.facebook.com' \
+-H 'referer: https://www.facebook.com/story.php?story_fbid=1016373530406265&id=100090227653227' \
+-H 'sec-ch-ua: "Chromium";v="134", "Not:A-Brand";v="24", "Google Chrome";v="134"' \
+-H 'sec-ch-ua-mobile: ?0' \
+-H 'sec-ch-ua-platform: "Windows"' \
+-H 'sec-fetch-dest: empty' \
+-H 'sec-fetch-mode: cors' \
+-H 'sec-fetch-site: same-origin' \
+-H 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36' \
+-H 'x-fb-friendly-name: CometUFICommentsQuery' \
+-H "x-fb-lsd: $LSD" \
+--data-urlencode "av=$USER_ID" \
+--data-urlencode "__user=$USER_ID" \
+--data-urlencode "__a=1" \
+--data-urlencode "fb_dtsg=$FB_DTSG" \
+--data-urlencode "lsd=$LSD" \
+--data-urlencode "fb_api_caller_class=RelayModern" \
+--data-urlencode "fb_api_req_friendly_name=CometUFICommentsQuery" \
+--data-urlencode "variables=$VARIABLES" \
+--data-urlencode "server_timestamps=true" \
+--data-urlencode "doc_id=6400693986684144" \ > "$TEMP_FILE"
+
+# Lưu response để debug
+cp "$TEMP_FILE" "comments_page_$PAGE.json"
+
+# Trích xuất người bình luận từ response
+PREVIOUS_COUNT=$ {
+    #COLLECTED_IDS[@]
+}
+
+while read -r id name; do
+[ -z "$id" ] && continue
+add_commenter "$id" "$name"
+done < <(grep -o '"author":{"__typename":"User","id":"[^"]*","name":"[^"]*"' "$TEMP_FILE" | sed 's/"author":{"__typename":"User","id":"//g' | sed 's/","name":"/ /g' | sed 's/"//g')
+
+# Tính số lượng thêm mới
+CURRENT_COUNT=$ {
+    #COLLECTED_IDS[@]
+}
+
+NEW_COUNT=$((CURRENT_COUNT - PREVIOUS_COUNT))
+echo "Trang $PAGE: Đã thêm $NEW_COUNT người bình luận mới (tổng: $CURRENT_COUNT)"
+
+# Lấy cursor cho trang tiếp theo
+NEXT_CURSOR=$(grep -o '"has_next_page":true,"end_cursor":"[^"]*"' "$TEMP_FILE" | sed 's/"has_next_page":true,"end_cursor":"//g' | sed 's/"//g')
+
+if [ -n "$NEXT_CURSOR" ]; then
+CURSOR="$NEXT_CURSOR"
+echo "Tìm thấy cursor cho trang tiếp theo: ${CURSOR:0:20}..."
+else
+HAS_NEXT_PAGE=false
+echo "Không còn trang tiếp theo"
+fi
+
+# Chờ một chút để tránh bị giới hạn tốc độ
+sleep 1
+done
+
+# In kết quả
+echo "===== Kết quả ====="
+echo "Đã thu thập được ${#COLLECTED_IDS[@]} người bình luận duy nhất"
+echo "Danh sách đã được lưu vào file all_commenters.json"
+
+# Xóa file tạm
+rm -f "$TEMP_FILE"
